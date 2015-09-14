@@ -2,8 +2,7 @@ import Ember from 'ember';
 
 /*global window, JSON*/
 
-const isPresent = Ember.isPresent;
-const merge = Ember.merge;
+const {isPresent, merge} = Ember;
 
 export default Ember.Service.extend({
 
@@ -22,7 +21,7 @@ export default Ember.Service.extend({
    * @param {*} value The value to be stored. The value will be stringified.
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
-    setItem(key, value, options) {
+  setItem(key, value, options) {
     this._getDriver(options).setItem(key, JSON.stringify(value));
   },
 
@@ -32,7 +31,7 @@ export default Ember.Service.extend({
    * @param {String} key The key to use for value retrieval.
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
-    getItem(key, options) {
+  getItem(key, options) {
     let value = this._getDriver(options).getItem(key);
 
     if (isPresent(value)) {
@@ -48,7 +47,7 @@ export default Ember.Service.extend({
    * @param {String} key The key for the value to remove from storage.
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
-    removeItem(key, options) {
+  removeItem(key, options) {
     this._getDriver(options).removeItem(key);
   },
 
@@ -56,7 +55,7 @@ export default Ember.Service.extend({
    * Clear everything in storage.
    * @method clear
    */
-    clear(options) {
+  clear(options) {
     this._getDriver(options).clear();
   },
 
@@ -64,10 +63,10 @@ export default Ember.Service.extend({
    * Fetches a specifed storage type, or returns the sepcified default storage when none is specified.
    * The current types are: local, session, object.
    * @method _getStorageType
-   * @param {String} type The type of storage to use.
    * @private
+   * @param options
    */
-    _getDriver(options) {
+  _getDriver(options) {
     options = merge({
       driver: this.get('driver')
     }, options || {});
