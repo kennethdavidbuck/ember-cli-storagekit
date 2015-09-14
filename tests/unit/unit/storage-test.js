@@ -117,4 +117,14 @@ test('Correctly generates namespace key when valid namespace is null.', function
   assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
 });
 
+test('Correctly generates namespace key when valid namespace is false.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    namespace: false
+  });
+
+  assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
 

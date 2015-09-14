@@ -70,7 +70,7 @@ export default Ember.Service.extend({
    */
   namespaceKey(key) {
     const namespace = this.get('namespace');
-    return isPresent(namespace) ? `${namespace}:${key}` : key;
+    return namespace !== false && isPresent(namespace) ? `${namespace}:${key}` : key;
   },
 
   /**
