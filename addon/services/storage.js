@@ -7,6 +7,19 @@ const {isPresent, merge} = Ember;
 export default Ember.Service.extend({
 
   /**
+   * Namespace to prepend to each stored key, separated by a colon (:).
+   *
+   * Ex.
+   *
+   * ```javascript
+   *  'my-namespace:my-key
+   * ```
+   * @property {String} namespace
+   * @default ""
+   */
+  namespace: '',
+
+  /**
    * The default storage driver to use when none is specified.
    * @property {String} driver
    * @default 'local'
@@ -21,7 +34,7 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   setItem(key, value, options) {
-    this._getDriver(options).setItem(key, JSON.stringify(value));
+    this._getDriver(options).setItem(this.namespaceKey(key), JSON.stringify(value));
   },
 
   /**
@@ -31,7 +44,7 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   getItem(key, options) {
-    let value = this._getDriver(options).getItem(key);
+    let value = this._getDriver(options).getItem(this.namespaceKey(key));
 
     if (isPresent(value)) {
       value = JSON.parse(value);
@@ -47,7 +60,17 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   removeItem(key, options) {
-    this._getDriver(options).removeItem(key);
+    this._getDriver(options).removeItem(this.namespaceKey(key));
+  },
+
+  /**
+   * @method namespaceKey
+   * @param {String} key A key to be namespaced.
+   * @private
+   */
+  namespaceKey(key) {
+    const namespace = this.get('namespace');
+    return isPresent(namespace) ? `${namespace}:${key}` : key;
   },
 
   /**
@@ -59,7 +82,7 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Fetches a specifed storage type, or returns the sepcified default storage when none is specified.
+   * Fetches a specified storage type, or returns the sepcified default storage when none is specified.
    * The current types are: local, session, object.
    * @method _getStorageType
    * @private
