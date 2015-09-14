@@ -12,7 +12,7 @@ export default Ember.Service.extend({
    * Ex.
    *
    * ```javascript
-   *  'my-namespace:my-key
+   *  'my-namespace:my-key'
    * ```
    * @property {String} namespace
    * @default ""
