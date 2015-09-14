@@ -1,3 +1,4 @@
+# ember-cli-storagekit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit)
 # Ember-cli-storagekit
 
 This README outlines the details of collaborating on this Ember addon.
