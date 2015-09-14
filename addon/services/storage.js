@@ -8,8 +8,7 @@ export default Ember.Service.extend({
 
   /**
    * The default storage driver to use when none is specified.
-   * @property driver
-   * @type String
+   * @property {String} driver
    * @default 'local'
    */
   driver: 'local', // TODO: allow array of descending order of preference when types not available?
@@ -87,7 +86,7 @@ export default Ember.Service.extend({
 
   /**
    * Used for non-persistent storage. This data will disappear as soon as the app is destroyed.
-   * @property objectStorage
+   * @property {Ember.Object} objectStorage
    */
   objectStorage: Ember.Object.create({
     data: Ember.Map.create({}),
