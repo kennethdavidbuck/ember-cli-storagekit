@@ -90,6 +90,7 @@ export default Ember.Service.extend({
   /**
    * Fetches a specified storage type, or returns the specified default storage when none is specified.
    * The current types are: local, session, object.
+   * Note: Gracefully degrades to object storage
    * @method _getStorageType
    * @private
    * @param options
