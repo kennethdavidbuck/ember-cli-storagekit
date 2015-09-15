@@ -1,5 +1,5 @@
 import StorageSupportUtility from '../../../utilities/storage-support';
-import { module, test } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 module('Unit | Utility | Storage Support', {
   // Specify the other units that are required for this test.
