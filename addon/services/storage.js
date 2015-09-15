@@ -24,7 +24,7 @@ export default Ember.Service.extend({
    * @property {String} driver
    * @default 'local'
    */
-  driver: 'local', // TODO: allow array of descending order of preference when types not available?
+  driver: 'local',
 
   /**
    * Set an item into storage.
@@ -82,7 +82,7 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Fetches a specified storage type, or returns the sepcified default storage when none is specified.
+   * Fetches a specified storage type, or returns the specified default storage when none is specified.
    * The current types are: local, session, object.
    * @method _getStorageType
    * @private
@@ -92,6 +92,8 @@ export default Ember.Service.extend({
     options = merge({
       driver: this.get('driver')
     }, options || {});
+
+    options.driver = this.get('supportsLocalAndSessionStorage') ? options.driver : 'object';
 
     try {
       switch (options.driver) {
@@ -124,6 +126,18 @@ export default Ember.Service.extend({
     },
     clear() {
       this.get('data').clear();
+    }
+  }),
+
+  /**
+   * Whether or not the current environment supports either local or session storage.
+   * @property {Boolean} supportsLocalAndSessionStorage
+   */
+  supportsLocalAndSessionStorage: Ember.computed(function () {
+    try {
+      return 'localStorage' in window && window['localStorage'] !== null;
+    } catch(e){
+      return false;
     }
   })
 });
