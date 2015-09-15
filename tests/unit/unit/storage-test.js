@@ -78,3 +78,53 @@ test('objectStorage properly clears', function (assert) {
   assert.equal(storageService.getItem(key1, {driver: 'object'}), undefined);
   assert.equal(storageService.getItem(key2, {driver: 'object'}), undefined);
 });
+
+test('Correctly generates namespace key when namespace is the empty string.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject();
+
+  assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
+test('Correctly generates namespace key when valid namespace string is specified.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    namespace: 'foo'
+  });
+
+  assert.strictEqual(storageService.namespaceKey('bar'), 'foo:bar');
+});
+
+test('Correctly generates namespace key when valid namespace is undefined.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    namespace: undefined
+  });
+
+  assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
+test('Correctly generates namespace key when valid namespace is null.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    namespace: null
+  });
+
+  assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
+test('Correctly generates namespace key when valid namespace is false.', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    namespace: false
+  });
+
+  assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
+
