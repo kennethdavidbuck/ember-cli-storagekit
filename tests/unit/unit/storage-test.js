@@ -28,7 +28,7 @@ test('objectStorage properly sets and gets with . delimited key', function (asse
 
   storageService.setItem(key, value, {driver: 'object'});
 
-  assert.equal(storageService.getItem(key, {driver: 'object'}), value);
+  assert.equal(storageService.getItem(key, {driver: 'object'}), value, 'returned item should match input item.');
 });
 
 test('objectStorage properly sets and gets string value', function (assert) {
@@ -40,7 +40,7 @@ test('objectStorage properly sets and gets string value', function (assert) {
 
   storageService.setItem(key, value, {driver: 'object'});
 
-  assert.equal(storageService.getItem(key, {driver: 'object'}), value);
+  assert.equal(storageService.getItem(key, {driver: 'object'}), value, 'returned item should match input item.');
 });
 
 test('objectStorage properly sets and gets object value', function (assert) {
