@@ -1,76 +1,29 @@
+import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
+import JsonSerializer from '../serializers/json';
 
-/*global JSON*/
+export default Ember.Object.extend(BuildNamespaceMixin, {
 
-const {isPresent} = Ember;
-
-export default Ember.Object.extend({
-
-  /**
-   *
-   */
   storage: Ember.Map.create(),
 
-  /**
-   * Namespace to prepend to each stored key, separated by a colon (:).
-   *
-   * Ex.
-   *
-   * ```javascript
-   *  'my-namespace:my-key'
-   * ```
-   * @property {String} namespace
-   * @default ""
-   */
-  namespace: '',
+  serializer: JsonSerializer.create(),
 
-  /**
-   * @method namespaceKey
-   * @param {String} key A key to be namespaced.
-   * @private
-   */
-  buildNamespace(key) {
-    const namespace = this.get('namespace');
-    return namespace !== false && isPresent(namespace) ? `${namespace}:${key}` : key;
-  },
-
-  /**
-   *
-   */
   setItem(key, value) {
-    this.get('storage').set(this.buildNamespace(key), JSON.stringify(value));
+    this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
   },
 
-  /**
-   *
-   */
   getItem(key) {
-    let value = this.get('storage').get(this.buildNamespace(key));
-
-    if (isPresent(value)) {
-      value = JSON.parse(value);
-    }
-
-    return value;
+    return this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
   },
 
-  /**
-   *
-   */
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
   },
 
-  /**
-   *
-   */
   clear() {
     this.get('storage').clear();
   },
 
-  /**
-   *
-   */
   length() {
     return this.get('storage.size');
   }

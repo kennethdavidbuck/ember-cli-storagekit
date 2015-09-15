@@ -1,29 +1,12 @@
 import Ember from 'ember';
 import ObjectAdapter from '../adapters/object';
 
-/*global JSON*/
-
-const {isPresent} = Ember;
-
 export default Ember.Service.extend({
 
   /**
    *s @property adapter
    */
   adapter: ObjectAdapter.create(),
-
-  /**
-   * Namespace to prepend to each stored key, separated by a colon (:).
-   *
-   * Ex.
-   *
-   * ```javascript
-   *  'my-namespace:my-key'
-   * ```
-   * @property {String} namespace
-   * @default ""
-   */
-  namespace: '',
 
   /**
    * Set an item into storage.
@@ -54,16 +37,6 @@ export default Ember.Service.extend({
    */
   removeItem(key) {
     this.get('adapter').removeItem(key);
-  },
-
-  /**
-   * @method namespaceKey
-   * @param {String} key A key to be namespaced.
-   * @private
-   */
-  namespaceKey(key) {
-    const namespace = this.get('namespace');
-    return namespace !== false && isPresent(namespace) ? `${namespace}:${key}` : key;
   },
 
   /**
