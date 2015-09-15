@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import ObjectAdapter from '../adapters/object';
 
-const {isPresent} = Ember;
-
 export default Ember.Service.extend({
 
   adapter: ObjectAdapter.create(),

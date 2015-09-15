@@ -2,7 +2,7 @@ import Ember from 'ember';
 import BuildNamespaceMixin from '../../../mixins/build-namespace';
 import { module, test } from 'qunit';
 
-module('Unit - Mixin - Build Namespace');
+module('Unit | Mixin | Build Namespace');
 
 const BuildNamespaceObject = Ember.Object.extend(BuildNamespaceMixin);
 
@@ -11,7 +11,7 @@ test('Correctly generates namespace key when namespace is the empty string.', fu
 
   const buildNamespaceObject =  BuildNamespaceObject.create();
 
-  assert.strictEqual(buildNamespaceObject.namespaceKey('foo'), 'foo');
+  assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
 
 test('Correctly generates namespace key when valid namespace string is specified.', function (assert) {
@@ -21,7 +21,7 @@ test('Correctly generates namespace key when valid namespace string is specified
     namespace: 'foo'
   });
 
-  assert.strictEqual(buildNamespaceObject.namespaceKey('bar'), 'foo:bar');
+  assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'foo:bar');
 });
 
 test('Correctly generates namespace key when valid namespace is undefined.', function (assert) {
@@ -31,7 +31,7 @@ test('Correctly generates namespace key when valid namespace is undefined.', fun
     namespace: undefined
   });
 
-  assert.strictEqual(buildNamespaceObject.namespaceKey('foo'), 'foo');
+  assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
 
 test('Correctly generates namespace key when valid namespace is null.', function (assert) {
@@ -41,7 +41,7 @@ test('Correctly generates namespace key when valid namespace is null.', function
     namespace: null
   });
 
-  assert.strictEqual(buildNamespaceObject.namespaceKey('foo'), 'foo');
+  assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
 
 test('Correctly generates namespace key when valid namespace is false.', function (assert) {
@@ -51,5 +51,5 @@ test('Correctly generates namespace key when valid namespace is false.', functio
     namespace: false
   });
 
-  assert.strictEqual(buildNamespaceObject.namespaceKey('foo'), 'foo');
+  assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
