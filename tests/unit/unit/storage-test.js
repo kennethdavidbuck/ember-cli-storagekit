@@ -87,6 +87,14 @@ test('objectStorage properly clears', function (assert) {
   assert.equal(storageService.getItem(key2, {driver: 'object'}), undefined);
 });
 
+test('objectStorage length', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject();
+
+  assert.equal(storageService.length({driver: 'object'}), 0);
+});
+
 test('Correctly generates namespace key when namespace is the empty string.', function (assert) {
   assert.expect(1);
 

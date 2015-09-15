@@ -40,7 +40,7 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   setItem(key, value, options) {
-    this._getDriver(options).setItem(this.namespaceKey(key), JSON.stringify(value));
+    this.getDriver(options).setItem(this.namespaceKey(key), JSON.stringify(value));
   },
 
   /**
@@ -50,7 +50,7 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   getItem(key, options) {
-    let value = this._getDriver(options).getItem(this.namespaceKey(key));
+    let value = this.getDriver(options).getItem(this.namespaceKey(key));
 
     if (isPresent(value)) {
       value = JSON.parse(value);
@@ -66,7 +66,7 @@ export default Ember.Service.extend({
    * @param {Object} options The options object for specified additional parameters such as storage type.
    */
   removeItem(key, options) {
-    this._getDriver(options).removeItem(this.namespaceKey(key));
+    this.getDriver(options).removeItem(this.namespaceKey(key));
   },
 
   /**
@@ -84,18 +84,25 @@ export default Ember.Service.extend({
    * @method clear
    */
   clear(options) {
-    this._getDriver(options).clear();
+    this.getDriver(options).clear();
   },
 
   /**
-   * Fetches a specified storage type, or returns the specified default storage when none is specified.
+   *
+   */
+  length(options) {
+    return this.getDriver(options).length();
+  },
+
+  /**
+   * Fetches a specified storage driver, or returns the specified default storage when none is specified.
    * The current types are: local, session, object.
    * Note: Gracefully degrades to object storage
-   * @method _getStorageType
-   * @private
+   * @method getDriver
    * @param options
+   * @private
    */
-  _getDriver(options) {
+  getDriver(options) {
     options = merge({
       driver: this.get('driver')
     }, options || {});
@@ -103,9 +110,9 @@ export default Ember.Service.extend({
     if(this.get('hasStorageSupport')) {
       switch (options.driver) {
         case 'local':
-          return this.get('global').localStorage;
+          return this.get('localStorage');
         case 'session':
-          return this.get('global').sessionStorage;
+          return this.get('sessionStorage');
       }
     }
 
@@ -113,23 +120,77 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Used for non-persistent storage. This data will disappear as soon as the app is destroyed.
-   * @property {Ember.Object} objectStorage
+   * Thin wrapper over localStorage
+   * @property localStorage
    */
-  objectStorage: Ember.Object.create({
-    data: Ember.Map.create({}),
-    setItem(key, value) {
-      this.get('data').set(key, value);
-    },
-    getItem(key) {
-      return this.get('data').get(key);
-    },
-    removeItem(key){
-      this.get('data').delete(key);
-    },
-    clear() {
-      this.get('data').clear();
-    }
+  localStorage: Ember.computed(function () {
+    return Ember.Object.create({
+      storage: this.get('global.localStorage'),
+      setItem(key, value) {
+        this.get('storage').setItem(key, value);
+      },
+      getItem(key) {
+        return this.get('storage').getItem(key);
+      },
+      removeItem(key) {
+        this.get('storage').removeItem(key);
+      },
+      clear() {
+        this.get('storage').clear();
+      },
+      length() {
+        return this.get('storage').length;
+      }
+    });
+  }),
+  /**
+   * Thin wrapper over sessionStorage
+   * @property sessionStorage
+   */
+  sessionStorage: Ember.computed(function () {
+    return Ember.Object.create({
+      storage: this.get('global.sessionStorage'),
+      setItem(key, value) {
+        this.get('storage').setItem(key, value);
+      },
+      getItem(key) {
+        return this.get('storage').getItem(key);
+      },
+      removeItem(key) {
+        this.get('storage').removeItem(key);
+      },
+      clear() {
+        this.get('storage').clear();
+      },
+      length() {
+        return this.get('storage.length');
+      }
+    });
+  }),
+
+  /**
+   * Used for non-persistent storage. This data will disappear as soon as the app is destroyed.
+   * @property object
+   */
+  objectStorage: Ember.computed(function () {
+    return Ember.Object.create({
+      storage: Ember.Map.create(),
+      setItem(key, value) {
+        this.get('storage').set(key, value);
+      },
+      getItem(key) {
+        return this.get('storage').get(key);
+      },
+      removeItem(key){
+        this.get('storage').delete(key);
+      },
+      clear() {
+        this.get('storage').clear();
+      },
+      length() {
+        return this.get('storage.size');
+      }
+    });
   }),
 
   /**
