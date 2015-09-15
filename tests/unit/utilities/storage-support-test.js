@@ -8,7 +8,7 @@ module('Unit | Utility | Storage Support', {
 });
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function (assert) {
   assert.ok(StorageSupportUtility);
 });
 
