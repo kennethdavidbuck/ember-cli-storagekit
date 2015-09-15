@@ -7,6 +7,12 @@ const {isPresent, merge} = Ember;
 export default Ember.Service.extend({
 
   /**
+   * Global environment object
+   * @property global
+   */
+  global: window,
+
+  /**
    * Namespace to prepend to each stored key, separated by a colon (:).
    *
    * Ex.
@@ -24,7 +30,7 @@ export default Ember.Service.extend({
    * @property {String} driver
    * @default 'local'
    */
-  driver: 'local', // TODO: allow array of descending order of preference when types not available?
+  driver: 'local',
 
   /**
    * Set an item into storage.
@@ -82,7 +88,7 @@ export default Ember.Service.extend({
   },
 
   /**
-   * Fetches a specified storage type, or returns the sepcified default storage when none is specified.
+   * Fetches a specified storage type, or returns the specified default storage when none is specified.
    * The current types are: local, session, object.
    * @method _getStorageType
    * @private
@@ -93,18 +99,16 @@ export default Ember.Service.extend({
       driver: this.get('driver')
     }, options || {});
 
-    try {
+    if(this.get('hasStorageSupport')) {
       switch (options.driver) {
         case 'local':
-          return window.localStorage;
+          return this.get('global').localStorage;
         case 'session':
-          return window.sessionStorage;
-        case 'object':
-          return this.get('objectStorage');
+          return this.get('global').sessionStorage;
       }
-    } catch (e) {
-      return this.get('objectStorage');
     }
+
+    return this.get('objectStorage');
   },
 
   /**
@@ -124,6 +128,19 @@ export default Ember.Service.extend({
     },
     clear() {
       this.get('data').clear();
+    }
+  }),
+
+  /**
+   * Whether or not the current environment supports either local or session storage.
+   * @property {Boolean} supportsLocalAndSessionStorage
+   */
+  hasStorageSupport: Ember.computed(function () {
+    try {
+      const _global = this.get('global');
+      return 'localStorage' in _global && _global['localStorage'] !== null;
+    } catch(e) {
+      return false;
     }
   })
 });
