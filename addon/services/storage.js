@@ -7,6 +7,12 @@ const {isPresent, merge} = Ember;
 export default Ember.Service.extend({
 
   /**
+   * Global environment object
+   * @property global
+   */
+  global: window,
+
+  /**
    * Namespace to prepend to each stored key, separated by a colon (:).
    *
    * Ex.
@@ -93,20 +99,16 @@ export default Ember.Service.extend({
       driver: this.get('driver')
     }, options || {});
 
-    options.driver = this.get('supportsLocalAndSessionStorage') ? options.driver : 'object';
-
-    try {
+    if(this.get('hasStorageSupport')) {
       switch (options.driver) {
         case 'local':
-          return window.localStorage;
+          return this.get('global').localStorage;
         case 'session':
-          return window.sessionStorage;
-        case 'object':
-          return this.get('objectStorage');
+          return this.get('global').sessionStorage;
       }
-    } catch (e) {
-      return this.get('objectStorage');
     }
+
+    return this.get('objectStorage');
   },
 
   /**
@@ -133,10 +135,11 @@ export default Ember.Service.extend({
    * Whether or not the current environment supports either local or session storage.
    * @property {Boolean} supportsLocalAndSessionStorage
    */
-  supportsLocalAndSessionStorage: Ember.computed(function () {
+  hasStorageSupport: Ember.computed(function () {
     try {
-      return 'localStorage' in window && window['localStorage'] !== null;
-    } catch(e){
+      const _global = this.get('global');
+      return 'localStorage' in _global && _global['localStorage'] !== null;
+    } catch(e) {
       return false;
     }
   })

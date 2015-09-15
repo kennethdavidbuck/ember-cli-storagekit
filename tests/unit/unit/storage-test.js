@@ -1,8 +1,16 @@
 import { moduleFor, test } from 'ember-qunit';
 
+/*global sinon*/
+
+let sandbox;
+
 moduleFor('service:storage', 'Unit | Service | Storage', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  setup() {
+    sandbox = sinon.sandbox;
+  },
+  teardown() {
+    sandbox.restore();
+  }
 });
 
 // Replace this with your real tests.
@@ -125,6 +133,48 @@ test('Correctly generates namespace key when valid namespace is false.', functio
   });
 
   assert.strictEqual(storageService.namespaceKey('foo'), 'foo');
+});
+
+test('Correctly determines that there is no storage support', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    global: {}
+  });
+
+  assert.notOk(storageService.get('hasStorageSupport'), 'Should determine that there is no storage support.');
+});
+
+test('Correctly determines that there is storage support', function (assert) {
+  assert.expect(1);
+
+  const storageService = this.subject({
+    global: {
+      localStorage: {},
+      sessionStorage: {}
+    }
+  });
+
+  assert.ok(storageService.get('hasStorageSupport'), 'Should determine that there is storage support.');
+});
+
+test('Recovers from error thrown during storage support check and interprets as lack of support', function (assert) {
+  assert.expect(1);
+
+  const _global = {};
+
+  // package does not support IE8 so we are ok to do this.
+  Object.defineProperty(_global, 'localStorage', {
+    get: function () {
+      throw Error;
+    }
+  });
+
+  const storageService = this.subject({
+    global: _global
+  });
+
+  assert.notOk(storageService.get('hasStorageSupport'), 'Should determine that there is no storage support.');
 });
 
 
