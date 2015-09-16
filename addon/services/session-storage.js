@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import ObjectAdapter from '../adapters/object';
+import SessionAdapter from '../adapters/session';
 
 export default Ember.Service.extend({
 
-  adapter: ObjectAdapter.create(),
+  adapter: SessionAdapter.create(),
 
   setItem(key, value) {
     this.get('adapter').setItem(key, value);

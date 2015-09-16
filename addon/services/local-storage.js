@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import ObjectAdapter from '../adapters/object';
+import LocalAdapter from '../adapters/local';
 
 export default Ember.Service.extend({
 
-  adapter: ObjectAdapter.create(),
+  adapter: LocalAdapter.create(),
 
   setItem(key, value) {
     this.get('adapter').setItem(key, value);
