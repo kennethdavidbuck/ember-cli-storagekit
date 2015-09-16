@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {isPresent} = Ember;
 
 export default Ember.Mixin.create({
+
   /**
    * Namespace to prepend to each stored key, separated by a colon (:).
    *
