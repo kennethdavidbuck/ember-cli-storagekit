@@ -17,13 +17,18 @@ import Ember from 'ember';
 export default Ember.Namespace.create({
 
   /**
+   * The environment global object (ex. window)
    * @property {*} global
    * @private
    */
   global: window,
 
   /**
+   * Determines whether or not the current environment has support for a given type of storage.
+   * ex. localStorage, sessionStorage
    * @method has
+   * @param {String} type The storage type to be checked for support in the current environment.
+   * @return {Boolean} Whether or not the given storage type is supported.
    * @public
    */
   has(type) {
