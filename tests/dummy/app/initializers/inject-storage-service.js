@@ -8,5 +8,6 @@ export function initialize(registry, application) {
 
 export default {
   name: 'inject-storage-service',
+  after: 'inject-storagekit',
   initialize: initialize
 };

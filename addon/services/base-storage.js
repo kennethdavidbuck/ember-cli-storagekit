@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
 
+  adapter: null,
+
   setItem(key, value) {
     this.get('adapter').setItem(key, value);
   },

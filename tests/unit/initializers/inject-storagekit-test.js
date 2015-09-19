@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { initialize } from '../../../storagekit/initializers/inject-storagekit';
+import { initialize } from '../../../initializers/inject-storagekit';
 import { module, test } from 'qunit';
 
 var registry, application;
