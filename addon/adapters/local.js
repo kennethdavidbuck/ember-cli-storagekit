@@ -19,7 +19,6 @@ import Ember from 'ember';
 export default Ember.Object.extend(BuildNamespaceMixin, {
 
   /**
-   * Window localStorage object
    * @property {window.localStorage} storage
    * @private
    */

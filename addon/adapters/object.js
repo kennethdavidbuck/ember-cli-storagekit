@@ -18,16 +18,22 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
 
   /**
    * @property {Ember.Map} storage
+   * @private
    */
   storage: Ember.Map.create(),
 
   /**
+   * The serializer to use when storing values into objectStorage
    * @property {*} serializer
+   * @private
    */
   serializer: null,
 
   /**
+   * Sets an value into objectStorage under a provided key
    * @method setItem
+   * @param {String} key The key name to store the given value under
+   * @param {*} value A value to store under a specified key
    * @public
    */
   setItem(key, value) {
@@ -35,7 +41,10 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Gets a value from objectStorage based on a given key
    * @method getItem
+   * @param {String} key The key to use when retrieving a value from objectStorage
+   * @return The value retrieved from objectStorage based on the given key
    * @public
    */
   getItem(key) {
@@ -43,7 +52,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Removes a value from objectStorage using a given key
    * @method removeItem
+   * @param {String} key The key/value to remove from objectStorage
    * @public
    */
   removeItem(key){
@@ -51,6 +62,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Clears all key/value pairs from objectStorage
    * @method clear
    * @public
    */
@@ -59,7 +71,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * The current length/number of items in objectStorage
    * @method length
+   * @return {Number} The number of items in objectStorage
    * @public
    */
   length() {
