@@ -9,9 +9,10 @@ export function initialize(container, application) {
   application.inject('storagekit/service:local-storage', 'adapter', 'storagekit/adapter:local');
   application.inject('storagekit/service:session-storage', 'adapter', 'storagekit/adapter:session');
 
-  // service injections
+  // instance storage injection
   application.inject('storagekit/service:storage', 'instance', 'storagekit/service:instance-storage');
 
+  // local storage injection
   let localType = 'storagekit/service:local-storage';
   let localOptions = {singleton:true};
 
@@ -22,15 +23,16 @@ export function initialize(container, application) {
 
   application.inject('storagekit/service:storage', 'local', localType, localOptions);
 
+  // session storage injection
   let sessionType = 'storagekit/service:session-storage';
   let sessionOptions = {singleton:true};
 
-  if(!StorageSupportUtility.has('localStorage')) {
+  if(!StorageSupportUtility.has('sessionStorage')) {
     sessionType = 'storagekit/service:instance-storage';
     sessionOptions.singleton = false;
   }
 
-  application.inject('storagekit/service:storage', 'local', sessionType, sessionOptions);
+  application.inject('storagekit/service:storage', 'session', sessionType, sessionOptions);
 }
 
 export default {
