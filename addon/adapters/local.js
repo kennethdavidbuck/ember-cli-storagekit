@@ -19,12 +19,16 @@ import Ember from 'ember';
 export default Ember.Object.extend(BuildNamespaceMixin, {
 
   /**
-   * @property {*} storage
+   * Window localStorage object
+   * @property {window.localStorage} storage
+   * @private
    */
   storage: window.localStorage,
 
   /**
+   * The serializer to use when storing values into localStorage
    * @property {*} serializer
+   * @private
    */
   serializer: null,
 
@@ -43,6 +47,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * Gets a value from localStorage based on a given key
    * @method getItem
    * @param {String} key The key to use when retrieving a value from localStorage
+   * @return The value retrieved from localStorage based on the given key
    * @public
    */
   getItem(key) {
@@ -60,6 +65,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Clears all key/value pairs from localStorage
    * @method clear
    * @public
    */
@@ -68,7 +74,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * The current length/number of items in localStorage
    * @method length
+   * @return {Number} The number of items in localStorage
    * @public
    */
   length() {
