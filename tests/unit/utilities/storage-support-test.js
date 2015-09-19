@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import StorageSupportUtility from '../../../utilities/storage-support';
+import StorageSupportUtility from '../../../storagekit/utilities/storage-support';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | Storage Support', {

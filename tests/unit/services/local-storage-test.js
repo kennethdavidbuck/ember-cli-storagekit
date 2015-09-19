@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:local-storage', 'Unit | Service | local storage', {
+moduleFor('storagekit/service:local-storage', 'Unit | Service | local storage', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

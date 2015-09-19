@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('adapter:local', 'Unit | Adapter | local', {
+moduleFor('storagekit/adapter:local', 'Unit | Adapter | local', {
   // Specify the other units that are required for this test.
   // needs: ['serializer:foo']
 });

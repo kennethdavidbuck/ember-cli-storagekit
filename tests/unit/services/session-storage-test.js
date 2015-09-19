@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:session-storage', 'Unit | Service | session storage', {
+moduleFor('storagekit/service:session-storage', 'Unit | Service | session storage', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });
