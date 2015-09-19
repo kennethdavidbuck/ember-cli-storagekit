@@ -15,11 +15,14 @@ import Ember from 'ember';
 export default Ember.Service.extend({
 
   /**
+   * The adapter being delegated to
    * @property {*} adapter
+   * @private
    */
   adapter: null,
 
   /**
+   * Delegates a setItem call to the underlying storage source
    * @method setItem
    * @public
    */
@@ -28,6 +31,7 @@ export default Ember.Service.extend({
   },
 
   /**
+   * Delegates a getItem call to the underlying storage source
    * @method getItem
    * @public
    */
@@ -36,6 +40,7 @@ export default Ember.Service.extend({
   },
 
   /**
+   * Delegates a removeItem call to the underlying storage source
    * @method removeItem
    * @public
    */
@@ -44,6 +49,7 @@ export default Ember.Service.extend({
   },
 
   /**
+   * Clears the underlying storage source
    * @method clear
    * @public
    */
@@ -52,6 +58,7 @@ export default Ember.Service.extend({
   },
 
   /**
+   * Delegates a length call the underlying storage source
    * @method length
    * @public
    */
