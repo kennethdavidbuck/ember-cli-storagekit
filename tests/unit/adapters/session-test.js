@@ -1,12 +1,9 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('storagekit/adapter:session', 'Unit | Adapter | session', {
-  // Specify the other units that are required for this test.
-  // needs: ['serializer:foo']
-});
+moduleFor('storagekit/adapter:session', 'Unit | Adapter | session', {});
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function (assert) {
   var adapter = this.subject();
   assert.ok(adapter);
 });

@@ -1,6 +1,5 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
-import JsonSerializer from '../serializers/json';
 
 /*global window*/
 
@@ -8,7 +7,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
 
   storage: window.localStorage,
 
-  serializer: JsonSerializer.create(),
+  serializer: null,
 
   setItem(key, value) {
     this.get('storage').setItem(this.buildNamespace(key), this.get('serializer').serialize(value));

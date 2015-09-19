@@ -1,12 +1,9 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('object', 'Unit | Serializer | object', {
-  // Specify the other units that are required for this test.
-  needs: ['storagekit/serializer:json']
-});
+moduleForModel('object', 'Unit | Serializer | object', {});
 
 // Replace this with your real tests.
-test('it serializes records', function(assert) {
+test('it serializes records', function (assert) {
   var record = this.subject();
 
   var serializedRecord = record.serialize();
