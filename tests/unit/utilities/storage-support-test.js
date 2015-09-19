@@ -2,10 +2,7 @@ import Ember from 'ember';
 import StorageSupportUtility from '../../../storagekit/utilities/storage-support';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | Storage Support', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
-});
+module('Unit | Utility | Storage Support', {});
 
 // Replace this with your real tests.
 test('it exists', function (assert) {
