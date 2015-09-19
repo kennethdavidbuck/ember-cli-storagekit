@@ -4,7 +4,7 @@ import { moduleFor, test } from 'ember-qunit';
 
 let sandbox;
 
-moduleFor('service:object-storage', 'Unit | Service | Object Storage', {
+moduleFor('storagekit/service:object-storage', 'Unit | Service | Object Storage', {
   setup() {
     sandbox = sinon.sandbox;
   },

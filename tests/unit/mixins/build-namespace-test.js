@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BuildNamespaceMixin from '../../../mixins/build-namespace';
+import BuildNamespaceMixin from '../../../storagekit/mixins/build-namespace';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | Build Namespace');
