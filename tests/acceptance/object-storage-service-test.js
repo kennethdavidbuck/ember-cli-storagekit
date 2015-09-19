@@ -4,7 +4,7 @@ import startApp from '../../tests/helpers/start-app';
 
 let container;
 
-module('Acceptance | object storage service', {
+module('Acceptance | instance storage service', {
   beforeEach: function() {
     this.application = startApp();
 
@@ -20,7 +20,7 @@ module('Acceptance | object storage service', {
 test('properly sets and gets with . delimited key', function (assert) {
   assert.expect(1);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
   const key = 'foo.bar';
   const value = 'hello world';
 
@@ -33,7 +33,7 @@ test('properly sets and gets with . delimited key', function (assert) {
 test('properly sets and gets string value', function (assert) {
   assert.expect(1);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
   const key = 'foo';
   const value = 'hello world';
 
@@ -45,7 +45,7 @@ test('properly sets and gets string value', function (assert) {
 test('properly sets and gets object value', function (assert) {
   assert.expect(1);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
   const key = 'foo';
   const value = {hello: 'world'};
 
@@ -57,7 +57,7 @@ test('properly sets and gets object value', function (assert) {
 test('properly removes an item', function (assert) {
   assert.expect(1);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
   const key = 'foo';
   const value = 'hello world';
 
@@ -71,7 +71,7 @@ test('properly removes an item', function (assert) {
 test('properly clears', function (assert) {
   assert.expect(2);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
   const key1 = 'key1';
   const value1 = 'value1';
   const key2 = 'key2';
@@ -89,7 +89,7 @@ test('properly clears', function (assert) {
 test('length', function (assert) {
   assert.expect(1);
 
-  const storageService = container.lookup('storagekit/service:object-storage');
+  const storageService = container.lookup('storagekit/service:instance-storage');
 
   assert.equal(storageService.length(), 0);
 });

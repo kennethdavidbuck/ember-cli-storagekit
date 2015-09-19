@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('storagekit/adapter:object', 'Unit | Adapter | object', {});
+moduleFor('storagekit/adapter:instance', 'Unit | Adapter | instance', {});
 
 // Replace this with your real tests.
 test('it exists', function (assert) {

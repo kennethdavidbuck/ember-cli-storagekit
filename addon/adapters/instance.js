@@ -7,7 +7,7 @@ import Ember from 'ember';
  */
 
 /**
- * @class ObjectAdapter
+ * @class InstanceAdapter
  * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace
@@ -23,14 +23,14 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   storage: Ember.Map.create(),
 
   /**
-   * The serializer to use when storing values into objectStorage
+   * The serializer to use when storing values into instanceStorage
    * @property {*} serializer
    * @private
    */
   serializer: null,
 
   /**
-   * Sets an value into objectStorage under a provided key
+   * Sets an value into instanceStorage under a provided key
    * @method setItem
    * @param {String} key The key name to store the given value under
    * @param {*} value A value to store under a specified key
@@ -41,10 +41,10 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
-   * Gets a value from objectStorage based on a given key
+   * Gets a value from instanceStorage based on a given key
    * @method getItem
-   * @param {String} key The key to use when retrieving a value from objectStorage
-   * @return The value retrieved from objectStorage based on the given key
+   * @param {String} key The key to use when retrieving a value from instanceStorage
+   * @return The value retrieved from instanceStorage based on the given key
    * @public
    */
   getItem(key) {
@@ -52,9 +52,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
-   * Removes a value from objectStorage using a given key
+   * Removes a value from instanceStorage using a given key
    * @method removeItem
-   * @param {String} key The key/value to remove from objectStorage
+   * @param {String} key The key/value to remove from instanceStorage
    * @public
    */
   removeItem(key){
@@ -62,7 +62,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
-   * Clears all key/value pairs from objectStorage
+   * Clears all key/value pairs from instanceStorage
    * @method clear
    * @public
    */
@@ -71,9 +71,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
-   * The current length/number of items in objectStorage
+   * The current length/number of items in instanceStorage
    * @method length
-   * @return {Number} The number of items in objectStorage
+   * @return {Number} The number of items in instanceStorage
    * @public
    */
   length() {
