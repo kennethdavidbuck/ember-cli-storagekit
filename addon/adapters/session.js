@@ -11,15 +11,15 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   serializer: JsonSerializer.create(),
 
   setItem(key, value) {
-    this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
+    this.get('storage').setItem(this.buildNamespace(key), this.get('serializer').serialize(value));
   },
 
   getItem(key) {
-    return this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
+    return this.get('serializer').deserialize(this.get('storage').getItem(this.buildNamespace(key)));
   },
 
   removeItem(key){
-    this.get('storage').delete(this.buildNamespace(key));
+    this.get('storage').removeItem(this.buildNamespace(key));
   },
 
   clear() {
