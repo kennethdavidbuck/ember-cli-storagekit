@@ -7,7 +7,7 @@ import Ember from 'ember';
  */
 
 /**
- * @class Object
+ * @class ObjectAdapter
  * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace

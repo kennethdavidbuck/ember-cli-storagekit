@@ -10,7 +10,7 @@ const {isPresent} = Ember;
  */
 
 /**
- * @class Json
+ * @class JsonSerializer
  * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @public

@@ -9,7 +9,7 @@ import Ember from 'ember';
  */
 
 /**
- * @class Local
+ * @class LocalAdapter
  * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace

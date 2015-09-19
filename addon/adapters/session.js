@@ -9,7 +9,7 @@ import Ember from 'ember';
  */
 
 /**
- * @class Session
+ * @class SessionAdapter
  * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace

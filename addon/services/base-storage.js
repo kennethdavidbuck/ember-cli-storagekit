@@ -2,11 +2,11 @@ import Ember from 'ember';
 
 /**
  * @module ember-cli-storagekit
- * @submodule adapters
+ * @submodule services
  */
 
 /**
- * @class BaseStorage
+ * @class BaseStorageService
  * @namespace EmberCliStoragekit
  * @extends Ember.Service
  * @public
