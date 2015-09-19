@@ -29,7 +29,10 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   serializer: null,
 
   /**
+   * Sets an value into localStorage under a provided key
    * @method setItem
+   * @param {String} key The key name to store the given value under
+   * @param {*} value A value to store under a specified key
    * @public
    */
   setItem(key, value) {
@@ -37,7 +40,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Gets a value from localStorage based on a given key
    * @method getItem
+   * @param {String} key The key to use when retrieving a value from localStorage
    * @public
    */
   getItem(key) {
@@ -45,7 +50,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Removes a value from localStorage using a given key
    * @method removeItem
+   * @param {String} key The key/value to remove from localStorage
    * @public
    */
   removeItem(key){
