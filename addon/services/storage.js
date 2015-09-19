@@ -1,27 +1,22 @@
 import Ember from 'ember';
-import ObjectAdapter from '../adapters/object';
+import LocalStorageService from './local-storage';
+import ObjectStorageService from './object-storage';
+import SessionStorageService from './session-storage';
 
 export default Ember.Service.extend({
 
-  adapter: ObjectAdapter.create(),
+  /**
+   * @property local
+   */
+  local: LocalStorageService.create(),
 
-  setItem(key, value) {
-    this.get('adapter').setItem(key, value);
-  },
+  /**
+   * @property session
+   */
+  session: SessionStorageService.create(),
 
-  getItem(key) {
-    return this.get('adapter').getItem(key);
-  },
-
-  removeItem(key) {
-    this.get('adapter').removeItem(key);
-  },
-
-  clear() {
-    this.get('adapter').clear();
-  },
-
-  length() {
-    return this.get('adapter').length();
-  }
+  /**
+   * @property object
+   */
+  object: ObjectStorageService.create()
 });
