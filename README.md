@@ -28,7 +28,7 @@ create you must specify your own injections.
 ```javascript
 export function initialize(registry, application) {
   // inject the storage service, which contains each storage type.
-  application.inject('route', 'storageService', 'storagekit/service:storage');
+  application.inject('route', 'storage', 'storagekit/service:storage');
   
   // you can also inject each service individually if that is your thing.
   application.inject('route', 'localStorage', 'storagekit/service:local-storage');
@@ -49,8 +49,8 @@ export default {
 // ...snip...
   actions: {
     savePreferences(preferences) {
-      // with the storage service
-      this.get('storageService.local').setItem('preferences', preferences);
+      // with storage
+      this.get('storage.local').setItem('preferences', preferences);
       
       // with localStorage
       this.get('localStorage').setItem('preferences', preferences);
@@ -65,8 +65,8 @@ export default {
 // ...snip...
   actions: {
     saveSession(session) {
-      // with storageService
-      this.get('storageService.session').setItem('session', session);
+      // with storage
+      this.get('storage.session').setItem('session', session);
     
       // with sessionStorage
       this.get('sessionStorage').setItem('preferences', preferences);
@@ -81,8 +81,8 @@ export default {
 // ...snip...
   actions: {
     storeTemporarily(temporaryData) {
-      // with storageService
-      this.get('storageService.instance').setItem('tempData', temporaryData);
+      // with storage
+      this.get('storage.instance').setItem('tempData', temporaryData);
     
       // with instanceStorage
       this.get('instanceStorage').setItem('tempData', temporaryData);
