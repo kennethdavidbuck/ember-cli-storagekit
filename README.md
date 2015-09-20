@@ -69,7 +69,7 @@ export default {
       this.get('storage.session').setItem('session', session);
     
       // with sessionStorage
-      this.get('sessionStorage').setItem('preferences', preferences);
+      this.get('sessionStorage').setItem('session', session);
     }
   }
 // ...snip...
@@ -82,10 +82,10 @@ export default {
   actions: {
     storeTemporarily(temporaryData) {
       // with storage
-      this.get('storage.instance').setItem('tempData', temporaryData);
+      this.get('storage.instance').setItem('temporaryData', temporaryData);
     
       // with instanceStorage
-      this.get('instanceStorage').setItem('tempData', temporaryData);
+      this.get('instanceStorage').setItem('temporaryData', temporaryData);
     }
   }
 // ...snip...
