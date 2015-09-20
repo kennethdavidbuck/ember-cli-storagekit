@@ -28,11 +28,10 @@ create you must specify your own injections.
 ```javascript
 export function initialize(registry, application) {
   // inject the storage service, which contains each storage type.
-  application.inject('controller', 'storageService', 'storagekit/service:storage');
   application.inject('route', 'storageService', 'storagekit/service:storage');
   
   // you can also inject each service individually if that is your thing.
-  application.inject('controller', 'localStorage', 'storagekit/service:local-storage');
+  application.inject('route', 'localStorage', 'storagekit/service:local-storage');
   application.inject('route', 'sessionStorage', 'storagekit/service:session-storage');
   application.inject('route', 'instanceStorage', 'storagekit/service:instance-storage');
 }
