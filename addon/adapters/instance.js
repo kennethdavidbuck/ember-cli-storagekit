@@ -8,7 +8,6 @@ import Ember from 'ember';
 
 /**
  * @class InstanceAdapter
- * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace
  * @public

@@ -7,7 +7,6 @@ import Ember from 'ember';
 
 /**
  * @class BaseStorageService
- * @namespace EmberCliStoragekit
  * @extends Ember.Service
  * @public
  */
@@ -24,6 +23,8 @@ export default Ember.Service.extend({
   /**
    * Delegates a setItem call to the underlying storage source
    * @method setItem
+   * @param {String} key
+   * @param {*} value
    * @public
    */
   setItem(key, value) {
@@ -33,6 +34,7 @@ export default Ember.Service.extend({
   /**
    * Delegates a getItem call to the underlying storage source
    * @method getItem
+   * @param {String} key
    * @public
    */
   getItem(key) {
@@ -42,6 +44,7 @@ export default Ember.Service.extend({
   /**
    * Delegates a removeItem call to the underlying storage source
    * @method removeItem
+   * @param {String} key
    * @public
    */
   removeItem(key) {
