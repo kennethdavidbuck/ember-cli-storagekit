@@ -4,6 +4,8 @@ A thin layer on top of the HTML5 localStorage and sessionStorage services. It al
 instanceStorage which can be used for storage on an instance by instance basis. However, the main usecase for instanceStorage is as a 
 failover when localStorage and sessionStorage are not available (such as when a user intentionally disables it).
 
+This addon does not assume your application uses ember data. That being said it would serve well as part of a custom local, session, instance storage adapter.
+
 ## Installation
 
 Currently you have to use npm and a release tag to install this package.
