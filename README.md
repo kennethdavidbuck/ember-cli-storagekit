@@ -92,7 +92,7 @@ export default {
 ```
 
 ## Generating the Docs
-TODO
+This addon has yuidoc annotations, and uses [ember-cli-yuidoc](https://github.com/nicoulaj/idea-markdown) in order to generate and serve them.
 
 ## Running Tests
 
