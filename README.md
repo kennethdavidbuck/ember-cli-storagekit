@@ -1,8 +1,8 @@
 ## ember-cli-storagekit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit)
 
 A thin layer on top of the HTML5 localStorage and sessionStorage services. It also has a third type of storage called 
-instanceStorage which can be used for storage on an instance by instance basis. Additionally instanceStorage is used 
-internally as a failover when localStorage and sessionStorage are not available (such as when a user intentionally disables it).
+instanceStorage which can be used for storage on an instance by instance basis. However, the main usecase for instanceStorage is as a 
+failover when localStorage and sessionStorage are not available (such as when a user intentionally disables it).
 
 ## Installation
 
@@ -13,14 +13,15 @@ npm install https://github.com/kennethdavidbuck/ember-cli-storagekit.git#v0.1.1
 ```
 
 ## Basic Usage
-Currently ember-cli-storagekit supports the following methods: 
+Storagekit takes care of ```JSON.stringify``` and ```JSON.parse()``` for you, and supports the following methods:
+
 * setItem
 * getItem
 * removeItem
 * clear
 * length
 
-ember-cli-storagekit makes no assumptions about where you would like to make the service available. As such you need to 
+Storagekit makes no assumptions about where you would like to make the service available. As such you need to 
 create you must specify your own injections.
 
 ### initializer
@@ -45,7 +46,7 @@ export default {
 
 ### Local
 ```javascript
-// A controller
+// A controller...or route
 // ...snip...
   actions: {
     savePreferences(preferences) {
@@ -61,7 +62,7 @@ export default {
 
 ### Session
 ```javascript
-// A controller
+// A controller...or route
 // ...snip...
   actions: {
     saveSession(session) {
@@ -70,6 +71,22 @@ export default {
     
       // with sessionStorage
       this.get('sessionStorage').setItem('preferences', preferences);
+    }
+  }
+// ...snip...
+```
+
+### Instance
+```javascript
+// A controller...or route
+// ...snip...
+  actions: {
+    storeTemporarily(temporaryData) {
+      // with storageService
+      this.get('storageService.instance').setItem('tempData', temporaryData);
+    
+      // with instanceStorage
+      this.get('instanceStorage').setItem('tempData', temporaryData);
     }
   }
 // ...snip...
