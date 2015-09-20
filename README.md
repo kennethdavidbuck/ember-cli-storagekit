@@ -9,10 +9,17 @@ internally as a failover when localStorage and sessionStorage are not available 
 Currently you have to use npm and a release tag to install this package.
 
 ```
-npm install https://github.com/kennethdavidbuck/ember-cli-storagekit.git#v0.1.0
+npm install https://github.com/kennethdavidbuck/ember-cli-storagekit.git#v0.1.1
 ```
 
 ## Basic Usage
+Currently ember-cli-storagekit supports the following methods: 
+* setItem
+* getItem
+* removeItem
+* clear
+* length
+
 ember-cli-storagekit makes no assumptions about where you would like to make the service available. As such you need to 
 create you must specify your own injections.
 
@@ -69,6 +76,7 @@ export default {
 ```
 
 ## Generating the Docs
+TODO
 
 ## Running Tests
 
