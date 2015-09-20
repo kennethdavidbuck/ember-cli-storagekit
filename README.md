@@ -7,10 +7,8 @@ This addon does not assume your application uses ember data. That being said it 
 
 ## Installation
 
-Currently you have to use npm and a release tag to install this package.
-
 ```
-npm install https://github.com/kennethdavidbuck/ember-cli-storagekit.git#v0.1.1
+ember install ember-cli-storagekit
 ```
 
 ## Basic Usage
