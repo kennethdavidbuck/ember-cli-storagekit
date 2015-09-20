@@ -7,7 +7,6 @@ import BaseStorageService from './base-storage';
 
 /**
  * @class ObjectStorageService
- * @namespace EmberCliStoragekit
  * @extends EmberCliStorageKit.BaseStorage
  * @public
  */

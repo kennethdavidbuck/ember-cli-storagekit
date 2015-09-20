@@ -8,7 +8,6 @@ import Ember from 'ember';
 /**
  * Storage Service acts a container for housing each storage service type that is available.
  * @class StorageService
- * @namespace EmberCliStoragekit
  * @extends Ember.Service
  * @public
  */
