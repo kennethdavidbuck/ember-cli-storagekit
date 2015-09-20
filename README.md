@@ -13,7 +13,7 @@ npm install https://github.com/kennethdavidbuck/ember-cli-storagekit.git#v0.1.1
 ```
 
 ## Basic Usage
-Storagekit takes care of ```JSON.stringify``` and ```JSON.parse()``` for you, and supports the following methods:
+Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, and supports the following methods:
 
 * setItem
 * getItem
