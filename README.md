@@ -1,4 +1,4 @@
-## ember-cli-storagekit ![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit)
+## ember-cli-storagekit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit)
 
 A thin layer on top of the HTML5 localStorage and sessionStorage services. It also has a third type of storage called 
 instanceStorage which can be used for storage on an instance by instance basis. Additionally instanceStorage is used 
