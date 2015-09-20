@@ -11,7 +11,6 @@ const {isPresent} = Ember;
 
 /**
  * @class JsonSerializer
- * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @public
  */

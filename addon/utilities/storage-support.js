@@ -9,7 +9,6 @@ import Ember from 'ember';
 
 /**
  * @class StorageSupportUtility
- * @namespace EmberCliStoragekit
  * @extends Ember.Namespace
  * @public
  */

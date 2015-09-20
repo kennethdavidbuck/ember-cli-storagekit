@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-const {isPresent} = Ember;
+const {isPresent, isBlank} = Ember;
+
+/**
+ * @module ember-cli-storagekit
+ * @submodule mixins
+ */
 
 export default Ember.Mixin.create({
 
@@ -18,12 +23,30 @@ export default Ember.Mixin.create({
   namespace: '',
 
   /**
-   * @method namespaceKey
-   * @param {String} key A key to be namespaced.
+   * @property {String} _namespace
    * @private
    */
+  _namespace: Ember.computed('namespace', function () {
+    let namespace = this.get('namespace');
+
+    if(isBlank(namespace) && this.container) {
+      const env = this.container.lookupFactory('config:environment');
+
+      if(env.hasOwnProperty('APP') && env.APP.hasOwnProperty('storagekit')) {
+        namespace = env.APP.storagekit.namespace;
+      }
+    }
+
+    return namespace || '';
+  }),
+
+  /**
+   * @method namespaceKey
+   * @param {String} key A key to be namespaced.
+   * @public
+   */
   buildNamespace(key) {
-    const namespace = this.get('namespace');
-    return namespace !== false && isPresent(namespace) ? `${namespace}:${key}` : key;
+    const namespace = this.get('_namespace');
+    return isPresent(namespace) ? `${this.get('_namespace')}:${key}` : key;
   }
 });

@@ -10,7 +10,6 @@ import Ember from 'ember';
 
 /**
  * @class LocalAdapter
- * @namespace EmberCliStoragekit
  * @extends Ember.Object
  * @uses EmberCliStoragekit/Mixins/BuildNamespace
  * @public
@@ -32,7 +31,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   serializer: null,
 
   /**
-   * Sets an value into localStorage under a provided key
+   * Sets a value into localStorage under a provided key
    * @method setItem
    * @param {String} key The key name to store the given value under
    * @param {*} value A value to store under a specified key
