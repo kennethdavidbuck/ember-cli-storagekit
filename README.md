@@ -21,8 +21,7 @@ Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, 
 * clear
 * length
 
-Storagekit makes no assumptions about where you would like to make the service available. As such you need to 
-create you must specify your own injections.
+Storagekit makes no assumptions about where you would like to make the service available. As such you need to specify your own injections.
 
 ### initializer
 ```javascript
