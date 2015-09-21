@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-storagekit",
-  "version": "0.2.3",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.2.4",
+  "description": "A thin layer on top of the HTML5 localStorage and sessionStorage services",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,10 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "kennethdavidbuck/ember-cli-storagekit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennethdavidbuck/ember-cli-storagekit"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
