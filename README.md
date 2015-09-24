@@ -1,4 +1,4 @@
-## ember-cli-storagekit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit)
+## ember-cli-storagekit [![Build Status](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit.svg?branch=develop)](https://travis-ci.org/kennethdavidbuck/ember-cli-storagekit) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-storagekit.svg)](http://emberobserver.com/addons/ember-cli-storagekit)
 
 A thin layer on top of the HTML5 localStorage and sessionStorage services. It also has a third type of storage called 
 instanceStorage which is used as a failover when localStorage or sessionStorage are not available (such as when a user intentionally disables them).
