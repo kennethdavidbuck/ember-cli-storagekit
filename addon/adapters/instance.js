@@ -61,6 +61,22 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Gets the key at a given based on alphabetical key ordering.
+   * @method key
+   * @param {Number} index
+   * @return {String|null} The key at the given index or null if it does not exist.
+   */
+  key(index) {
+    const keys = [];
+
+    this.get('storage').forEach((value, key) => {
+      keys.push(key);
+    });
+
+    return keys.sort()[index] || null;
+  },
+
+  /**
    * Clears all key/value pairs from instanceStorage
    * @method clear
    * @public
