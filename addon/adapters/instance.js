@@ -63,7 +63,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Gets the key at a given based on alphabetical key ordering.
    * @method key
-   * @param {Number} index
+   * @param {Number} index The index of the key to retrieve.
    * @return {String|null} The key at the given index or null if it does not exist.
    */
   key(index) {
