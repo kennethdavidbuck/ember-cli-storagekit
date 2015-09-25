@@ -109,7 +109,8 @@ Now your incoming keys will be stored to this:
 'storagekit:mykey'
 ```
 
-If you do not specify a namespace, then your keys will be stored in the same form that they are received.
+If you do not specify a namespace, then your keys will be stored in the same form that they are received. If you 
+specify a key directly in one of the adapters it will supercede the namespace in the env config.
 
 ## Generating the Docs
 This addon has yuidoc annotations, and uses [ember-cli-yuidoc](https://github.com/nicoulaj/idea-markdown) in order to generate and serve them.
