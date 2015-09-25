@@ -103,7 +103,7 @@ The storagekit env config provides a means for namespacing your application keys
   // ...snip...
 ```
 
-Now your incoming keys will be stored to this:
+Now your incoming keys will be stored like this:
 
 ```
 'storagekit:mykey'
