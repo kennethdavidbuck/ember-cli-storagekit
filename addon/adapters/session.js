@@ -60,6 +60,13 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * @method key
+   */
+  key(index) {
+    return this.get('storage').key(index);
+  },
+
+  /**
    * Clears all key/value pairs from sessionStorage
    * @method clear
    * @public
