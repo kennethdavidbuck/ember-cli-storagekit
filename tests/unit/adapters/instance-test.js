@@ -38,7 +38,7 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
   assert.strictEqual(adapter.key(1), 'foo', 'Index one should be second alphabetical key');
 });
 
-test('Properly reorganizing key indices when key is deleted', function (assert) {
+test('Properly reorganizes key indices when key is deleted', function (assert) {
   assert.expect(1);
 
   const adapter = this.subject({
