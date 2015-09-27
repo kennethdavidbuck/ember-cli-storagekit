@@ -2,7 +2,6 @@ import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('storagekit/adapter:instance', 'Unit | Adapter | instance', {});
 
-// Replace this with your real tests.
 test('it exists', function (assert) {
   var adapter = this.subject();
   assert.ok(adapter);
@@ -39,7 +38,7 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
   assert.strictEqual(adapter.key(1), 'foo', 'Index one should be second alphabetical key');
 });
 
-test('Properly reorganizing key indices when key is deleted', function (assert) {
+test('Properly reorganizes key indices when key is deleted', function (assert) {
   assert.expect(1);
 
   const adapter = this.subject({

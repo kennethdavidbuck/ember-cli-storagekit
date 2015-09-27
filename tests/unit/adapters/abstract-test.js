@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('storagekit/adapter:session', 'Unit | Adapter | session', {});
+moduleFor('storagekit/adapter:abstract', 'Unit | Adapter | abstract', {});
 
 test('it exists', function (assert) {
   var adapter = this.subject();

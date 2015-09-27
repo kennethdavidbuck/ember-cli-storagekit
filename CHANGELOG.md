@@ -1,5 +1,8 @@
 # ember-cli-storagekit change log
 
+### 0.2.8
+- [Refactor] Refactored adapters to use a common abstract adapter
+
 ### 0.2.7
 - [Docs] Updated README.md to include code climate, dependecies, devDependencies, and npm package version
 - [Dependency] Updated dependencies/dev-dependencies to current stable releases
