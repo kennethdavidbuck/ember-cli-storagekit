@@ -5,13 +5,13 @@ import startApp from '../../tests/helpers/start-app';
 let container;
 
 module('Acceptance | instance storage service', {
-  beforeEach: function() {
+  beforeEach: function () {
     this.application = startApp();
 
     container = this.application.__container__;
   },
 
-  afterEach: function() {
+  afterEach: function () {
     container = null;
     Ember.run(this.application, 'destroy');
   }
@@ -28,7 +28,6 @@ test('properly sets and gets with . delimited key', function (assert) {
 
   assert.equal(storageService.getItem(key), value, 'returned item should match input item.');
 });
-
 
 test('properly sets and gets string value', function (assert) {
   assert.expect(1);
