@@ -9,6 +9,7 @@ import Ember from 'ember';
 /**
  * @class InstanceAdapter
  * @extends EmberCliStoragekit.AbstractAdapter
+ * @requires Ember.Map
  * @public
  */
 
