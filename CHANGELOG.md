@@ -1,5 +1,13 @@
 # ember-cli-storagekit change log
 
+### 0.2.7
+- [Docs] Updated README.md to include code climate, dependecies, devDependencies, and npm package version
+- [Dependency] Updated dependencies/dev-dependencies to current stable releases
+
+### 0.2.6
+- [Feature] Added #keys method to storage interface.
+- [Docs] Updated README.md to include examples surrounding storage namespace
+
 ### 0.2.0
 
 - [Cleanup] simplified buildNamespace method
