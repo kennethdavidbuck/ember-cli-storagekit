@@ -47,6 +47,6 @@ export default Ember.Mixin.create({
    */
   buildNamespace(key) {
     const namespace = this.get('_namespace');
-    return isPresent(namespace) ? `${this.get('_namespace')}:${key}` : `${key}`;
+    return isPresent(namespace) ? `${namespace}:${key}` : `${key}`;
   }
 });
