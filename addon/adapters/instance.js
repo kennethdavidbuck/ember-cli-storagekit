@@ -15,7 +15,9 @@ import Ember from 'ember';
 
 export default AbstractAdapter.extend({
 
-  storage: Ember.Map.create(),
+  storage: Ember.computed(function () {
+    return Ember.Map.create();
+  }),
 
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));

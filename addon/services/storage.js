@@ -27,8 +27,8 @@ export default Ember.Service.extend({
   session: null,
 
   /**
-   * an objectStorage service object.
-   * @property {EmberCliStoragekit.ObjectStorageService} object
+   * an objectStorage service instance.
+   * @property {EmberCliStoragekit.InstanceStorageService} instance
    */
-  object: null
+  instance: null
 });
