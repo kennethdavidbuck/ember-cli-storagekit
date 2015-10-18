@@ -73,7 +73,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * Returns all the keys that are currently in the storage "world" in sorted order
    * (where the namespace defines the world boundary).
    * @method keys
-   * @param {boolean} options
+   * @param {Object} options
    * @public
    */
   keys(options) {
@@ -89,7 +89,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Clears all key/value pairs from storage
    * @method clear
-   * @param {boolean} options
+   * @param {Object} options
    * @public
    */
   clear(options) {
@@ -103,6 +103,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * The current length/number of items in storage
    * @method length
+   * @method {Object} options
    * @return {Number} The number of items in storage
    * @public
    */
