@@ -48,5 +48,14 @@ export default Ember.Mixin.create({
   buildNamespace(key) {
     const namespace = this.get('_namespace');
     return isPresent(namespace) ? `${namespace}:${key}` : `${key}`;
+  },
+
+  /**
+   * Determines whether or not a provided key is namespaced.
+   * @method isNamespaced
+   * @param {string} key The key to check the namespace status of.
+   */
+  isNamespacedKey(key) {
+    return `${key}`.indexOf(this.buildNamespace('')) === 0;
   }
 });

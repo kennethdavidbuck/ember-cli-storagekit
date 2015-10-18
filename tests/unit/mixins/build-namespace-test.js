@@ -118,3 +118,32 @@ test('Correctly generates namespace key when valid namespace is false.', functio
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
+
+test('determines a key is namespaced when when no namespace specified (global namespace)', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: false
+  });
+
+  assert.ok(buildNamespaceObject.isNamespacedKey('foo'), 'no namespace means all keys are globally namespaced.');
+});
+
+
+test('determines a key is namespaced when namespace specified', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  assert.ok(buildNamespaceObject.isNamespacedKey('foo:bar'), 'should determine key is namespaced.');
+});
+
+test('determines a key is not namespaced', function (assert) {
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  assert.ok(!buildNamespaceObject.isNamespacedKey('bar'), 'should determine key is not namespaced.');
+});

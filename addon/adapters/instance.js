@@ -1,6 +1,8 @@
 import AbstractAdapter from './abstract';
 import Ember from 'ember';
 
+const {merge} = Ember;
+
 /**
  * @module ember-cli-storagekit
  * @submodule adapters
@@ -19,29 +21,53 @@ export default AbstractAdapter.extend({
     return Ember.Map.create();
   }),
 
+  /**
+   * @override
+   */
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
   },
 
+  /**
+   * @override
+   */
   getItem(key) {
     return this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
   },
 
+  /**
+   * @override
+   */
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
   },
 
-  key(index) {
+  /**
+   * @override
+   */
+  keys(options) {
     const keys = [];
+    const _options = merge({
+      global: false
+    }, options || {});
 
     this.get('storage').forEach((value, key) => {
-      keys.push(key);
+      if(_options.global || this.isNamespacedKey(key)) {
+        keys.push(key);
+      }
     });
 
-    return keys.sort()[index] || null;
+    return keys.sort();
   },
 
-  length() {
-    return this.get('storage.size');
+  /**
+   * @override
+   */
+  clear(options) {
+    const storage = this.get('storage');
+
+    this.keys(options).forEach((key) => {
+      storage.delete(key);
+    });
   }
 });

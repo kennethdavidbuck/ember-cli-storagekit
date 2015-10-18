@@ -110,8 +110,21 @@ Now your incoming keys will be stored like this:
 'storagekit:mykey'
 ```
 
+IMPORTANT: The namespace defines the storage "world" for all operations, and will give a result based solely on keys that are namespaced within it. Such methods include: ```#clear```, ```#keys```, ```#length```, and ```#key```. 
+
+Why is this useful? Because it allows you to change your namespace based on the current environment. For example, you can define a different namespace for your test environment and keep yourself shielded from any setup and teardown methods that modify your browsers local or session storage.
+
+It is possible to call such methods within the global scope (not recommended). To do so pass along an options object with a property called global set to true.
+
+```javascript 
+  // ...snip...
+  this.get('storage.local').clear({global: true});
+  // ...snip...
+```
+
 If you do not specify a namespace, then your keys will be stored in the same form that they are received. If you 
 specify a key directly in one of the adapters it will supercede the namespace in the env config.
+
 
 ## Generating the Docs
 This addon has yuidoc annotations, and uses [ember-cli-yuidoc](https://github.com/nicoulaj/idea-markdown) in order to generate and serve them.

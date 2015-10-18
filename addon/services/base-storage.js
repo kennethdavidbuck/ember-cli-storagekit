@@ -55,27 +55,38 @@ export default Ember.Service.extend({
    * Delegates a key call to the underlying storage source.
    * @method key
    * @param {Number} index The index of the key to retrieve.
+   * @param {Object} options
    * @return {String|null} The key at the given index or null if it does not exist.
    */
-  key(index) {
-    return this.get('adapter').key(index);
+  key(index, options) {
+    return this.get('adapter').key(index, options);
+  },
+
+  /**
+   * Delegates a keys call to the underlying storage source
+   * @param {Object} options Whether all storage keys or just namespaced keys should be considered.
+   */
+  keys(options) {
+    return this.get('adapter').keys(options);
   },
 
   /**
    * Clears the underlying storage source
    * @method clear
+   * @param {Object} options
    * @public
    */
-  clear() {
-    this.get('adapter').clear();
+  clear(options) {
+    this.get('adapter').clear(options);
   },
 
   /**
    * Delegates a length call the underlying storage source
    * @method length
+   * @param {Object} options
    * @public
    */
-  length() {
-    return this.get('adapter').length();
+  length(options) {
+    return this.get('adapter').length(options);
   }
 });

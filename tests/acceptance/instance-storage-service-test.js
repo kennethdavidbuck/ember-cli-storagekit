@@ -81,8 +81,8 @@ test('properly clears', function (assert) {
 
   storageService.clear();
 
-  assert.equal(storageService.getItem(key1), undefined);
-  assert.equal(storageService.getItem(key2), undefined);
+  assert.equal(storageService.getItem(key1), undefined, `${key1} should be cleared`);
+  assert.equal(storageService.getItem(key2), undefined, `${key2} should be cleared`);
 });
 
 test('length', function (assert) {
