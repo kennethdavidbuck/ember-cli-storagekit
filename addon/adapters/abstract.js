@@ -1,6 +1,8 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
 
+const {merge} = Ember;
+
 /**
  * @module ember-cli-storagekit
  * @submodule adapters
@@ -63,8 +65,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * @method key
    */
-  key(index) {
-    return this.get('storage').key(index);
+  key(index, options) {
+    return this.keys(options)[index] || null;
   },
 
   /**
@@ -75,7 +77,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   keys(options) {
-    const _options = Ember.merge({
+    const _options = merge({
       global: false
     }, options || {});
 

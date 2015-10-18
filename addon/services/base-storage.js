@@ -55,10 +55,11 @@ export default Ember.Service.extend({
    * Delegates a key call to the underlying storage source.
    * @method key
    * @param {Number} index The index of the key to retrieve.
+   * @param {Object} options
    * @return {String|null} The key at the given index or null if it does not exist.
    */
-  key(index) {
-    return this.get('adapter').key(index);
+  key(index, options) {
+    return this.get('adapter').key(index, options);
   },
 
   /**

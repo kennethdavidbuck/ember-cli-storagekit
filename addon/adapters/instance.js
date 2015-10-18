@@ -1,6 +1,8 @@
 import AbstractAdapter from './abstract';
 import Ember from 'ember';
 
+const {merge} = Ember;
+
 /**
  * @module ember-cli-storagekit
  * @submodule adapters
@@ -31,13 +33,9 @@ export default AbstractAdapter.extend({
     this.get('storage').delete(this.buildNamespace(key));
   },
 
-  key(index) {
-    return this.keys()[index] || null;
-  },
-
   keys(options) {
     const keys = [];
-    const _options = Ember.merge({
+    const _options = merge({
       global: false
     }, options || {});
 
