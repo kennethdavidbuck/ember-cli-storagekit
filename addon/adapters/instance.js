@@ -32,26 +32,29 @@ export default AbstractAdapter.extend({
   },
 
   key(index) {
-    const keys = [];
-
-    this.get('storage').forEach((value, key) => {
-      keys.push(key);
-    });
-
     return this.keys()[index] || null;
   },
 
-  keys() {
+  keys(options) {
     const keys = [];
+    const _options = Ember.merge({
+      global: false
+    }, options || {});
 
     this.get('storage').forEach((value, key) => {
-      keys.push(key);
+      if(_options.global || this.isNamespacedKey(key)) {
+        keys.push(key);
+      }
     });
 
     return keys.sort();
   },
 
-  length() {
-    return this.get('storage.size');
+  clear(options) {
+    const storage = this.get('storage');
+
+    this.keys(options).forEach((key) => {
+      storage.delete(key);
+    });
   }
 });
