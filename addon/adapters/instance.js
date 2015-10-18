@@ -21,18 +21,30 @@ export default AbstractAdapter.extend({
     return Ember.Map.create();
   }),
 
+  /**
+   * @override
+   */
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
   },
 
+  /**
+   * @override
+   */
   getItem(key) {
     return this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
   },
 
+  /**
+   * @override
+   */
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
   },
 
+  /**
+   * @override
+   */
   keys(options) {
     const keys = [];
     const _options = merge({
@@ -48,6 +60,9 @@ export default AbstractAdapter.extend({
     return keys.sort();
   },
 
+  /**
+   * @override
+   */
   clear(options) {
     const storage = this.get('storage');
 
