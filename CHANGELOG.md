@@ -1,7 +1,7 @@
 # ember-cli-storagekit change log
 
 ### 0.3.0
-- [Feature] Storage methods respect namespace for all operations include #clear, #keys, #key, and #length
+- [Feature] Storage methods respect namespace for all operations including #clear, #keys, #key, and #length
 
 ### 0.2.8
 - [Refactor] Refactored adapters to use a common abstract adapter
