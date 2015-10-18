@@ -68,6 +68,15 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   },
 
   /**
+   * Returns all the keys that are currently in storage in sorted order.
+   * @method keys
+   * @public
+   */
+  keys() {
+    return Object.keys(this.get('storage')).sort();
+  },
+
+  /**
    * Clears all key/value pairs from storage
    * @method clear
    * @public

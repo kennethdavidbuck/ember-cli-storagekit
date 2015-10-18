@@ -38,7 +38,17 @@ export default AbstractAdapter.extend({
       keys.push(key);
     });
 
-    return keys.sort()[index] || null;
+    return this.keys()[index] || null;
+  },
+
+  keys() {
+    const keys = [];
+
+    this.get('storage').forEach((value, key) => {
+      keys.push(key);
+    });
+
+    return keys.sort();
   },
 
   length() {
