@@ -136,3 +136,43 @@ test('null is a valid key', function (assert) {
 
   assert.strictEqual(adapter.getItem('null'), 'bar');
 });
+
+test('keys returns all keys in storage', function (assert) {
+  assert.expect(2);
+
+  const adapter = this.subject({
+    container: {
+      lookupFactory() {
+        return {};
+      }
+    },
+    serializer: JsonSerializer.create()
+  });
+
+  adapter.setItem('foo', 'bar');
+
+  assert.equal(adapter.keys().length, 1);
+  assert.equal(adapter.keys()[0], 'foo');
+});
+
+test('keys returns all keys in alphabetical order', function (assert) {
+  assert.expect(3);
+
+  const adapter = this.subject({
+    container: {
+      lookupFactory() {
+        return {};
+      }
+    },
+    serializer: JsonSerializer.create()
+  });
+
+  adapter.setItem('foo', 'bar');
+  adapter.setItem('baz', 'qux');
+
+  const keys = adapter.keys();
+
+  assert.equal(keys.length, 2);
+  assert.equal(keys[0], 'baz');
+  assert.equal(keys[1], 'foo');
+});
