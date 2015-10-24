@@ -14,7 +14,10 @@ test('Correctly determines that there is localStorage support', function (assert
 
   Ember.run(() => {
     StorageSupportUtility.set('global', {
-      localStorage: {}
+      localStorage: {
+        getItem() {},
+        setItem() {}
+      }
     });
   });
 
@@ -36,7 +39,10 @@ test('Correctly determines that there is sessionStorage support', function (asse
 
   Ember.run(() => {
     StorageSupportUtility.set('global', {
-      sessionStorage: {}
+      sessionStorage: {
+        setItem() {},
+        getItem() {}
+      }
     });
   });
 
