@@ -1,5 +1,8 @@
 # ember-cli-storagekit change log
 
+### 0.3.1
+- [Bugfix] Better storage support check to ios5 browsing mode.
+
 ### 0.3.0
 - [Feature] Storage methods respect namespace for all operations including #clear, #keys, #key, and #length
 

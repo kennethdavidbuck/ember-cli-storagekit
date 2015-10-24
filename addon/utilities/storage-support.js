@@ -33,7 +33,13 @@ export default Ember.Namespace.create({
   has(type) {
     const _global = this.get('global');
     try {
-      return type in _global && _global[type] !== null;
+      // credit: https://gist.github.com/paulirish/5558557
+      const randomMD5 = '946d4feb0eac1298f72834168f4dffb2';
+
+      _global[type].setItem(randomMD5, randomMD5);
+      _global[type].getItem(randomMD5);
+
+      return true;
     } catch (e) {
       return false;
     }
