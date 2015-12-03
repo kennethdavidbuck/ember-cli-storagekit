@@ -1,7 +1,18 @@
 import { moduleFor, test } from 'ember-qunit';
 import JsonSerializer from '../../../storagekit/serializers/json';
 
-moduleFor('storagekit/adapter:instance', 'Unit | Adapter | instance', {});
+/*global sinon*/
+
+let sandbox;
+
+moduleFor('storagekit/adapter:instance', 'Unit | Adapter | instance', {
+  setup() {
+    sandbox = sinon.sandbox;
+  },
+  teardown() {
+    sandbox.restore();
+  }
+});
 
 test('it exists', function (assert) {
   var adapter = this.subject();
@@ -20,16 +31,15 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: {
       serialize(value) {
         return value;
       }
     }
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem('foo', 'bar');
@@ -43,16 +53,15 @@ test('Properly reorganizes key indices when key is deleted', function (assert) {
   assert.expect(1);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: {
       serialize(value) {
         return value;
       }
     }
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem('foo', 'bar');
@@ -67,12 +76,11 @@ test('Treats keys that are objects uniformly', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem({}, 'foo');
@@ -85,12 +93,11 @@ test('Treats keys that are arrays as a string of values', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem([1, 2, 3], 'foo');
@@ -103,12 +110,11 @@ test('undefined is a valid key', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem(undefined, 'bar');
@@ -122,12 +128,11 @@ test('null is a valid key', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem(null, 'bar');
@@ -141,12 +146,11 @@ test('keys returns all keys in storage', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem('foo', 'bar');
@@ -159,12 +163,11 @@ test('keys returns all keys in alphabetical order', function (assert) {
   assert.expect(3);
 
   const adapter = this.subject({
-    container: {
-      lookupFactory() {
-        return {};
-      }
-    },
     serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
   });
 
   adapter.setItem('foo', 'bar');
