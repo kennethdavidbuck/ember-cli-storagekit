@@ -1,4 +1,6 @@
-export function initialize(registry, application) {
+export function initialize() {
+  let application = arguments[1] || arguments[0];
+
   application.inject('service:session', 'storageService', 'storagekit/service:storage');
   application.inject('adapter', 'storageService', 'storagekit/service:storage');
   application.inject('controller', 'storageService', 'storagekit/service:storage');
