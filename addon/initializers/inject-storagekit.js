@@ -1,6 +1,9 @@
 import StorageSupportUtility from '../utilities/storage-support';
 
-export function initialize(container, application) {
+export function initialize() {
+  // keep backwards compatible with previous versions having 2 arguments (container, application)
+  let application = arguments[1] || arguments[0];
+
   // serializer injections
   application.inject('storagekit/adapter', 'serializer', 'storagekit/serializer:json');
 
