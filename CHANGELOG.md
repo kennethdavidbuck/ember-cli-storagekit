@@ -1,5 +1,9 @@
 # ember-cli-storagekit change log
 
+### 0.3.2
+- [Bugfix] Updated initializers to use backwards compatible means of accessing application instance
+- [Cleanup] Switched to using sinon for stubbing adapter container in unit tests.
+
 ### 0.3.1
 - [Bugfix] Better storage support check to ios5 browsing mode.
 
