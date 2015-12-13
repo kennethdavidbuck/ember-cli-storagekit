@@ -81,7 +81,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * (where the namespace defines the world boundary).
    * @method keys
    * @param {Object} options
-   * @return {Promise.<[string]>}
+   * @return Promise.<[string]>
    * @public
    */
   keys(options) {
@@ -104,10 +104,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   clear(options) {
-    const storage = this.get('storage');
-
     return this.keys(options).then(keys => RSVP.all(
-      keys.map(key => storage.removeItem(key)))
+      keys.map(this.get('storage').removeItem))
     );
   },
 
