@@ -6,6 +6,9 @@ instanceStorage which is used as a failover when localStorage or sessionStorage 
 
 This addon does not assume your application uses ember data. That being said it would serve well as part of a custom local, session, instance storage adapter.
 
+**IMPORTANT**: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
+possible async kv storage services.
+
 ## Installation
 
 ```
@@ -21,9 +24,6 @@ Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, 
 * clear
 * length
 * key
-
-**IMPORTANT**: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
-possible async kv storage services.
 
 Storagekit makes no assumptions about where you would like to make the service available. As such you need to specify your own injections.
 
