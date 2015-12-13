@@ -31,7 +31,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Sets a value into storage under a provided key
    * @method setItem
-   * @param {String} key The key name to store the given value under
+   * @param {string} key The key name to store the given value under
    * @param {*} value A value to store under a specified key
    * @public
    */
@@ -42,7 +42,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Gets a value from storage based on a given key
    * @method getItem
-   * @param {String} key The key to use when retrieving a value from storage
+   * @param {string} key The key to use when retrieving a value from storage
    * @return The value retrieved from storage based on the given key
    * @public
    */
@@ -53,7 +53,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Removes a value from storage using a given key
    * @method removeItem
-   * @param {String} key The key/value to remove from storage
+   * @param {string} key The key/value to remove from storage
    * @public
    */
   removeItem(key){

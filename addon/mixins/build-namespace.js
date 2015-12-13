@@ -17,13 +17,13 @@ export default Ember.Mixin.create({
    * ```javascript
    *  'my-namespace:my-key'
    * ```
-   * @property {String} namespace
+   * @property {string} namespace
    * @default ""
    */
   namespace: '',
 
   /**
-   * @property {String} _namespace
+   * @property {string} _namespace
    * @private
    */
   _namespace: Ember.computed('namespace', function () {
@@ -42,7 +42,7 @@ export default Ember.Mixin.create({
 
   /**
    * @method namespaceKey
-   * @param {String} key A key to be namespaced.
+   * @param {string} key A key to be namespaced.
    * @public
    */
   buildNamespace(key) {
