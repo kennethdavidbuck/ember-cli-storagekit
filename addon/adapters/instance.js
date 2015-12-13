@@ -20,7 +20,7 @@ export default AbstractAdapter.extend({
 
   storage: Ember.computed(function () {
     return Ember.Map.create();
-  }),
+  }).readOnly(),
 
   /**
    * @override
