@@ -1,7 +1,8 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
 
-const {merge} = Ember;
+const {merge, RSVP} = Ember;
+const {Promise} = RSVP;
 
 /**
  * @module ember-cli-storagekit
@@ -40,7 +41,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   setItem(key, value) {
     this.get('storage').setItem(this.buildNamespace(key), this.get('serializer').serialize(value));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve();
     });
   },
@@ -55,7 +56,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   getItem(key) {
     const item = this.get('serializer').deserialize(this.get('storage').getItem(this.buildNamespace(key)));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve(item);
     });
   },
@@ -69,7 +70,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   removeItem(key) {
     this.get('storage').removeItem(this.buildNamespace(key));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve();
     });
   },
@@ -78,7 +79,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @method key
    */
   key(index, options) {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.keys(options).then((keys) => {
         resolve(keys[index] || null);
       });
@@ -101,8 +102,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
       return _options.global || this.isNamespacedKey(key);
     }).sort();
 
-    return new Ember.RSVP.Promise((resolve) => {
-      resolve(keys);
+    return new Promise((resolve) => {
+      resolve(Ember.A(keys));
     });
   },
 
@@ -113,14 +114,20 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   clear(options) {
-    const storage = this.get('storage');
+    return new Promise((resolve) => {
+      const storage = this.get('storage');
 
-    this.keys(options).forEach((key) => {
-      storage.removeItem(key);
-    });
+      this.keys(options).then((keys) => {
+        const promises = [];
 
-    return new Ember.RSVP.Promise((resolve) => {
-      resolve();
+        keys.forEach((key) => {
+          promises.push(storage.removeItem(key));
+        });
+
+        new RSVP.all(promises).then(() => {
+          resolve();
+        });
+      });
     });
   },
 
@@ -132,7 +139,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   length(options) {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.keys(options).then((keys) => {
         resolve(keys.length);
       });

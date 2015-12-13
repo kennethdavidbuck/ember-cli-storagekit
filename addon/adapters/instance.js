@@ -1,7 +1,8 @@
 import AbstractAdapter from './abstract';
 import Ember from 'ember';
 
-const {merge} = Ember;
+const {merge, RSVP} = Ember;
+const {Promise} = RSVP;
 
 /**
  * @module ember-cli-storagekit
@@ -27,7 +28,7 @@ export default AbstractAdapter.extend({
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve();
     });
   },
@@ -38,7 +39,7 @@ export default AbstractAdapter.extend({
   getItem(key) {
     const item = this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve(item);
     });
   },
@@ -49,7 +50,7 @@ export default AbstractAdapter.extend({
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       resolve();
     });
   },
@@ -69,8 +70,8 @@ export default AbstractAdapter.extend({
       }
     });
 
-    return new Ember.RSVP.Promise((resolve) => {
-      resolve(keys.sort());
+    return new Promise((resolve) => {
+      resolve(Ember.A(keys.sort()));
     });
   },
 
@@ -81,13 +82,13 @@ export default AbstractAdapter.extend({
     const storage = this.get('storage');
     const promises = [];
 
-    return new Ember.RSVP.Promise((resolve) => {
+    return new Promise((resolve) => {
       this.keys(options).then((keys) => {
         keys.forEach((key) => {
           promises.push(storage.delete(key));
         });
 
-        new Ember.RSVP.all(promises).then(() => {
+        new RSVP.all(promises).then(() => {
           resolve();
         });
       });
