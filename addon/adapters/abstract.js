@@ -1,8 +1,6 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
 
-const {merge} = Ember;
-
 /**
  * @module ember-cli-storagekit
  * @submodule adapters
@@ -65,35 +63,29 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * @method key
    */
-  key(index, options) {
-    return this.keys(options)[index] || null;
+  key(index) {
+    return this.keys()[index] || null;
   },
 
   /**
    * Returns all the keys that are currently in the storage "world" in sorted order
    * (where the namespace defines the world boundary).
    * @method keys
-   * @param {Object} options
    * @public
    */
-  keys(options) {
-    const _options = merge({
-      global: false
-    }, options || {});
-
+  keys() {
     return Object.keys(this.get('storage')).filter((key) => {
-      return _options.global || this.isNamespaced(key);
+      return this.isNamespaced(key);
     }).map(key => this.stripNamespace(key)).sort();
   },
 
   /**
    * Clears all key/value pairs from storage
    * @method clear
-   * @param {Object} options
    * @public
    */
-  clear(options) {
-    this.keys(options).forEach((key) => {
+  clear() {
+    this.keys().forEach((key) => {
       this.removeItem(key);
     });
   },
@@ -101,11 +93,10 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * The current length/number of items in storage
    * @method length
-   * @method {Object} options
    * @return {Number} The number of items in storage
    * @public
    */
-  length(options) {
-    return this.keys(options).length;
+  length() {
+    return this.keys().length;
   }
 });
