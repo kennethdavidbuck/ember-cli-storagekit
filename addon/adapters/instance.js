@@ -28,9 +28,7 @@ export default AbstractAdapter.extend({
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
 
-    return new Promise((resolve) => {
-      resolve();
-    });
+    return Promise.resolve();
   },
 
   /**
@@ -39,9 +37,7 @@ export default AbstractAdapter.extend({
   getItem(key) {
     const item = this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
 
-    return new Promise((resolve) => {
-      resolve(item);
-    });
+    return Promise.resolve(item);
   },
 
   /**
@@ -50,9 +46,7 @@ export default AbstractAdapter.extend({
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
 
-    return new Promise((resolve) => {
-      resolve();
-    });
+    return Promise.resolve();
   },
 
   /**
@@ -70,9 +64,7 @@ export default AbstractAdapter.extend({
       }
     });
 
-    return new Promise((resolve) => {
-      resolve(Ember.A(keys.sort()));
-    });
+    return Promise.resolve(Ember.A(keys.sort()));
   },
 
   /**

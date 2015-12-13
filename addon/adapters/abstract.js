@@ -41,9 +41,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   setItem(key, value) {
     this.get('storage').setItem(this.buildNamespace(key), this.get('serializer').serialize(value));
 
-    return new Promise((resolve) => {
-      resolve();
-    });
+    return Promise.resolve();
   },
 
   /**
@@ -56,9 +54,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   getItem(key) {
     const item = this.get('serializer').deserialize(this.get('storage').getItem(this.buildNamespace(key)));
 
-    return new Promise((resolve) => {
-      resolve(item);
-    });
+    return Promise.resolve(item);
   },
 
   /**
@@ -70,9 +66,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   removeItem(key) {
     this.get('storage').removeItem(this.buildNamespace(key));
 
-    return new Promise((resolve) => {
-      resolve();
-    });
+    return Promise.resolve();
   },
 
   /**
@@ -102,9 +96,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
       return _options.global || this.isNamespacedKey(key);
     }).sort();
 
-    return new Promise((resolve) => {
-      resolve(Ember.A(keys));
-    });
+    return Promise.resolve(Ember.A(keys));
   },
 
   /**
