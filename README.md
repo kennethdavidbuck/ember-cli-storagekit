@@ -129,7 +129,7 @@ Now your incoming keys will be stored like this:
 
 Why is this useful? Because it allows you to change your namespace based on the current environment. For example, you can define a different namespace for your test environment and keep yourself shielded from any setup and teardown methods that modify your browsers local or session storage.
 
-If you do not specify a namespace, then your keys will be stored in the same form that they are received. If you 
+If you do not specify a namespace, then your keys will be stored in the same form that they are received (which also means you will be operating on the global storage space). If you 
 specify a key directly in one of the adapters it will supercede the namespace in the env config.
 
 
