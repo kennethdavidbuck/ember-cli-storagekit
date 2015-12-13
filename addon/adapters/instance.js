@@ -48,13 +48,11 @@ export default AbstractAdapter.extend({
 
     this.get('storage').forEach((value, key) => {
       if(this.isNamespaced(key)) {
-        keys.push(key);
+        keys.push(this.stripNamespace(key));
       }
     });
 
-    return keys
-      .map(key => this.stripNamespace(key))
-      .sort();
+    return keys.sort();
   },
 
   /**
