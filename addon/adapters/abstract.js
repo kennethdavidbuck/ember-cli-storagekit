@@ -102,7 +102,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   clear(options) {
     const storage = this.get('storage');
 
-    return this.keys(options).then(keys => new RSVP.all(keys.map(key => storage.removeItem(key))));
+    return this.keys(options).then(keys => RSVP.all(keys.map(key => storage.removeItem(key))));
   },
 
   /**
