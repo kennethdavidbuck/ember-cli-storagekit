@@ -51,7 +51,11 @@ export default Ember.Mixin.create({
   },
 
   /**
+   * strips the namespace from a namespaced key
    * @method stripNamespace
+   * @param {string} key A namespaced key to be stripped
+   * @return {string} The key with its namespace removed
+   * @public
    */
   stripNamespace(key) {
     Ember.assert(`${key} is not a namespaced key`, this.isNamespaced(key));
