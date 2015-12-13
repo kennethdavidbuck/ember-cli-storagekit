@@ -175,8 +175,6 @@ test('throws error when attempting to extract non-namespaced key', function (ass
     namespace: 'foo'
   });
 
-  buildNamespaceObject.isNamespacedKey('foo:bar');
-
   try {
     buildNamespaceObject.stripNamespace('bar');
   } catch (e) {
