@@ -6,7 +6,7 @@ instanceStorage which is used as a failover when localStorage or sessionStorage 
 
 This addon does not assume your application uses ember data. That being said it would serve well as part of a custom local, session, instance storage adapter.
 
-**IMPORTANT**: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
+**BREAKING CHANGE**: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
 possible async kv storage services.
 
 ## Installation
