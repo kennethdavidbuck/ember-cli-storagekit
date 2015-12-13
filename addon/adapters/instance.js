@@ -71,10 +71,8 @@ export default AbstractAdapter.extend({
    * @override
    */
   clear(options) {
-    const storage = this.get('storage');
-
     return this.keys(options).then(keys => RSVP.all(
-      keys.map(key => storage.delete(key)))
+      keys.map(key => this.get('storage').delete(key)))
     );
   }
 });
