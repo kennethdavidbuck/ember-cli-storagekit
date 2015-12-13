@@ -82,8 +82,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
     }, options || {});
 
     return Object.keys(this.get('storage')).filter((key) => {
-      return _options.global || this.isNamespacedKey(key);
-    }).sort();
+      return _options.global || this.isNamespaced(key);
+    }).map(key => this.stripNamespace(key)).sort();
   },
 
   /**
@@ -93,10 +93,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   clear(options) {
-    const storage = this.get('storage');
-
     this.keys(options).forEach((key) => {
-      storage.removeItem(key);
+      this.removeItem(key);
     });
   },
 

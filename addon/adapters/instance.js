@@ -52,22 +52,20 @@ export default AbstractAdapter.extend({
     }, options || {});
 
     this.get('storage').forEach((value, key) => {
-      if(_options.global || this.isNamespacedKey(key)) {
+      if(_options.global || this.isNamespaced(key)) {
         keys.push(key);
       }
     });
 
-    return keys.sort();
+    return keys.map(key => this.stripNamespace(key)).sort();
   },
 
   /**
    * @override
    */
   clear(options) {
-    const storage = this.get('storage');
-
     this.keys(options).forEach((key) => {
-      storage.delete(key);
+      this.removeItem(key);
     });
   }
 });
