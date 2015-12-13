@@ -45,7 +45,7 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
     return {};
   });
 
-  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
+  Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
     adapter.key(0).then((key) => {
       assert.strictEqual(key, 'bar', 'Index zero should be first alphabetical key');
     });
@@ -71,7 +71,7 @@ test('Properly reorganizes key indices when key is deleted', function (assert) {
     return {};
   });
 
-  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
+  Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
     adapter.removeItem('bar').then(() => {
       adapter.key(0).then((key) => {
         assert.strictEqual(key, 'foo', 'deleting first value shifts other values towards index 0');
@@ -215,7 +215,7 @@ test('keys returns all keys in alphabetical order', function (assert) {
     return {};
   });
 
-  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('baz', 'qux')]).then(() => {
+  Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('baz', 'qux')]).then(() => {
     adapter.keys().then((keys) => {
       assert.equal(keys.length, 2);
       assert.equal(keys[0], 'baz');
