@@ -78,7 +78,9 @@ Storagekit makes no assumptions about where you would like to make the service a
       });
     
       // with sessionStorage
-      this.get('sessionStorage').setItem('session', session);
+      this.get('sessionStorage').setItem('session', session).then(() => {
+        // ...
+      });
     }
   }
   // ...snip...
