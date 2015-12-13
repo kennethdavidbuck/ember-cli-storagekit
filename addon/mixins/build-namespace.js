@@ -68,6 +68,7 @@ export default Ember.Mixin.create({
    * @method isNamespaced
    * @param {string} key The key to check the namespace status of.
    * @return {boolean}
+   * @public
    */
   isNamespaced(key) {
     return `${key}`.indexOf(this.buildNamespace('')) === 0;
@@ -78,6 +79,7 @@ export default Ember.Mixin.create({
    * @method isNamespacedKey
    * @param {string} key The key to check the namespace status of.
    * @return {boolean}
+   * @public
    * @deprecated please use #isNamespaced instead.
    */
   isNamespacedKey(key) {
