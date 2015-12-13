@@ -177,7 +177,6 @@ test('keys returns all keys in storage when namespace is present', function (ass
   });
 
   adapter.setItem('foo', 'bar').then(() => {
-
     adapter.keys().then((keys) => {
       assert.equal(keys.length, 1);
       assert.equal(keys[0], 'foo');
