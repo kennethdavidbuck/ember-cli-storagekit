@@ -16,7 +16,7 @@ ember install ember-cli-storagekit
 ```
 
 ## Basic Usage
-Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, and supports the following async methods:
+Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, and supports the following **async** methods:
 
 * setItem
 * getItem
