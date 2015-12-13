@@ -147,3 +147,37 @@ test('determines a key is not namespaced', function (assert) {
 
   assert.ok(!buildNamespaceObject.isNamespacedKey('bar'), 'should determine key is not namespaced.');
 });
+
+test('extracts key from namespace when namespace provided', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  assert.equal(buildNamespaceObject.extractKey('foo:bar'), 'bar');
+});
+
+test('extracts key from namespace when no namespace provided', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: null
+  });
+
+  assert.equal(buildNamespaceObject.extractKey('bar'), 'bar');
+});
+
+test('throws error when attempting to extract non-namespaced key', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  try {
+    buildNamespaceObject.extractKey('bar');
+  } catch(e) {
+    assert.ok(true);
+  }
+});

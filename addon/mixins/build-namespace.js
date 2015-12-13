@@ -51,6 +51,18 @@ export default Ember.Mixin.create({
   },
 
   /**
+   * @method extractKey
+   */
+  extractKey(key) {
+    Ember.assert(`${key} is not a namespaced key`, this.isNamespacedKey(key));
+
+    const length = this.get('_namespace.length');
+    const sliceIndex = length === 0 ? 0 : length + 1;
+
+    return `${key}`.slice(sliceIndex);
+  },
+
+  /**
    * Determines whether or not a provided key is namespaced.
    * @method isNamespaced
    * @param {string} key The key to check the namespace status of.
