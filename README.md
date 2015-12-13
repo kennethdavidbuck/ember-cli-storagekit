@@ -22,7 +22,7 @@ Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, 
 * length
 * key
 
-IMPORTANT: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
+**IMPORTANT**: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
 possible async kv storage services.
 
 Storagekit makes no assumptions about where you would like to make the service available. As such you need to specify your own injections.
@@ -123,7 +123,7 @@ Now your incoming keys will be stored like this:
 'storagekit:mykey'
 ```
 
-IMPORTANT: The namespace defines the storage "world" for all operations, and will give a result based solely on keys that are namespaced within it. Such methods include: ```#clear```, ```#keys```, ```#length```, and ```#key```. 
+**IMPORTANT**: The namespace defines the storage "world" for all operations, and will give a result based solely on keys that are namespaced within it. Such methods include: ```#clear```, ```#keys```, ```#length```, and ```#key```. 
 
 Why is this useful? Because it allows you to change your namespace based on the current environment. For example, you can define a different namespace for your test environment and keep yourself shielded from any setup and teardown methods that modify your browsers local or session storage.
 
