@@ -73,11 +73,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @method key
    */
   key(index, options) {
-    return new Promise((resolve) => {
-      this.keys(options).then((keys) => {
-        resolve(keys[index] || null);
-      });
-    });
+     return this.keys(options).then((keys) => {
+        return keys[index] || null;
+     });
   },
 
   /**
@@ -123,10 +121,8 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   length(options) {
-    return new Promise((resolve) => {
-      this.keys(options).then((keys) => {
-        resolve(keys.length);
-      });
+    return this.keys(options).then((keys) => {
+      return keys.length;
     });
   }
 });

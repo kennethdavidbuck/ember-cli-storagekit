@@ -72,18 +72,11 @@ export default AbstractAdapter.extend({
    */
   clear(options) {
     const storage = this.get('storage');
-    const promises = [];
 
-    return new Promise((resolve) => {
-      this.keys(options).then((keys) => {
-        keys.forEach((key) => {
-          promises.push(storage.delete(key));
-        });
-
-        new RSVP.all(promises).then(() => {
-          resolve();
-        });
-      });
+    return this.keys(options).then((keys) => {
+      return new RSVP.all(keys.map((key) => {
+        return storage.delete(key);
+      }));
     });
   }
 });
