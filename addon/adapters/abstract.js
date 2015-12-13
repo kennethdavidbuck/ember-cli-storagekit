@@ -1,8 +1,6 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
 
-const {merge} = Ember;
-
 /**
  * @module ember-cli-storagekit
  * @submodule adapters
@@ -33,7 +31,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Sets a value into storage under a provided key
    * @method setItem
-   * @param {String} key The key name to store the given value under
+   * @param {string} key The key name to store the given value under
    * @param {*} value A value to store under a specified key
    * @public
    */
@@ -44,7 +42,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Gets a value from storage based on a given key
    * @method getItem
-   * @param {String} key The key to use when retrieving a value from storage
+   * @param {string} key The key to use when retrieving a value from storage
    * @return The value retrieved from storage based on the given key
    * @public
    */
@@ -55,7 +53,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Removes a value from storage using a given key
    * @method removeItem
-   * @param {String} key The key/value to remove from storage
+   * @param {string} key The key/value to remove from storage
    * @public
    */
   removeItem(key){
@@ -65,49 +63,39 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * @method key
    */
-  key(index, options) {
-    return this.keys(options)[index] || null;
+  key(index) {
+    return this.keys()[index] || null;
   },
 
   /**
    * Returns all the keys that are currently in the storage "world" in sorted order
    * (where the namespace defines the world boundary).
    * @method keys
-   * @param {Object} options
    * @public
    */
-  keys(options) {
-    const _options = merge({
-      global: false
-    }, options || {});
-
-    return Object.keys(this.get('storage')).filter((key) => {
-      return _options.global || this.isNamespacedKey(key);
-    }).sort();
+  keys() {
+    return Object.keys(this.get('storage'))
+      .filter(key => this.isNamespaced(key))
+      .map(key => this.stripNamespace(key))
+      .sort();
   },
 
   /**
    * Clears all key/value pairs from storage
    * @method clear
-   * @param {Object} options
    * @public
    */
-  clear(options) {
-    const storage = this.get('storage');
-
-    this.keys(options).forEach((key) => {
-      storage.removeItem(key);
-    });
+  clear() {
+    this.keys().forEach(key => this.removeItem(key));
   },
 
   /**
    * The current length/number of items in storage
    * @method length
-   * @method {Object} options
    * @return {Number} The number of items in storage
    * @public
    */
-  length(options) {
-    return this.keys(options).length;
+  length() {
+    return this.keys().length;
   }
 });

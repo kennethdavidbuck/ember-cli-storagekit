@@ -142,7 +142,25 @@ test('null is a valid key', function (assert) {
   assert.strictEqual(adapter.getItem('null'), 'bar');
 });
 
-test('keys returns all keys in storage', function (assert) {
+test('keys returns all keys in storage when namespace is present', function (assert) {
+  assert.expect(2);
+
+  const adapter = this.subject({
+    namespace: 'baz',
+    serializer: JsonSerializer.create()
+  });
+
+  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
+    return {};
+  });
+
+  adapter.setItem('foo', 'bar');
+
+  assert.equal(adapter.keys().length, 1);
+  assert.equal(adapter.keys()[0], 'foo');
+});
+
+test('keys returns all keys in storage when namespace is not present', function (assert) {
   assert.expect(2);
 
   const adapter = this.subject({
