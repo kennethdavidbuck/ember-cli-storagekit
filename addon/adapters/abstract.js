@@ -81,6 +81,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * (where the namespace defines the world boundary).
    * @method keys
    * @param {Object} options
+   * @return {Promise.<[string]>}
    * @public
    */
   keys(options) {
@@ -88,7 +89,9 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
       global: false
     }, options || {});
 
-    const keys = Object.keys(this.get('storage')).filter(key => _options.global || this.isNamespacedKey(key)).sort();
+    const keys = Object.keys(this.get('storage')).filter(
+      key => _options.global || this.isNamespacedKey(key)
+    ).sort();
 
     return Promise.resolve(Ember.A(keys));
   },
@@ -97,19 +100,22 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * Clears all key/value pairs from storage
    * @method clear
    * @param {Object} options
+   * @return {Promise}
    * @public
    */
   clear(options) {
     const storage = this.get('storage');
 
-    return this.keys(options).then(keys => RSVP.all(keys.map(key => storage.removeItem(key))));
+    return this.keys(options).then(keys => RSVP.all(
+      keys.map(key => storage.removeItem(key)))
+    );
   },
 
   /**
    * The current length/number of items in storage
    * @method length
    * @method {Object} options
-   * @return {Number} The number of items in storage
+   * @return {Promise.<number>} The number of items in storage
    * @public
    */
   length(options) {
