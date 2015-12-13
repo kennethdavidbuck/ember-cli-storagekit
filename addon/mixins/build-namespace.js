@@ -51,23 +51,32 @@ export default Ember.Mixin.create({
   },
 
   /**
-   * @method extractKey
+   * @method stripNamespace
    */
-  extractKey(key) {
-    Ember.assert(`${key} is not a namespaced key`, this.isNamespacedKey(key));
+  stripNamespace(key) {
+    Ember.assert(`${key} is not a namespaced key`, this.isNamespaced(key));
 
-    const length = this.get('_namespace.length');
-    const sliceIndex = length === 0 ? 0 : length + 1;
-
-    return `${key}`.slice(sliceIndex);
+    return `${key}`.slice(this.buildNamespace('').length);
   },
 
   /**
    * Determines whether or not a provided key is namespaced.
    * @method isNamespaced
    * @param {string} key The key to check the namespace status of.
+   * @return {boolean}
+   */
+  isNamespaced(key) {
+    return `${key}`.indexOf(this.buildNamespace('')) === 0;
+  },
+
+  /**
+   * Determines whether or not a provided key is namespaced.
+   * @method isNamespacedKey
+   * @param {string} key The key to check the namespace status of.
+   * @return {boolean}
+   * @deprecated please use #isNamespaced instead.
    */
   isNamespacedKey(key) {
-    return `${key}`.indexOf(this.buildNamespace('')) === 0;
+    return this.isNamespaced(key);
   }
 });
