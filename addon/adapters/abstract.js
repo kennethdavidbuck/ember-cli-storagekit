@@ -90,9 +90,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
       global: false
     }, options || {});
 
-    const keys = Object.keys(this.get('storage')).filter((key) => {
-      return _options.global || this.isNamespacedKey(key);
-    }).sort();
+    const keys = Object.keys(this.get('storage')).filter(key => _options.global || this.isNamespacedKey(key)).sort();
 
     return Promise.resolve(Ember.A(keys));
   },
@@ -107,9 +105,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
     const storage = this.get('storage');
 
     return this.keys(options).then((keys) => {
-      return new RSVP.all(keys.map((key) => {
-        return storage.removeItem(key);
-      }));
+      return new RSVP.all(keys.map((key) => storage.removeItem(key)));
     });
   },
 
@@ -121,8 +117,6 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @public
    */
   length(options) {
-    return this.keys(options).then((keys) => {
-      return keys.length;
-    });
+    return this.keys(options).then(keys => keys.length);
   }
 });
