@@ -13,7 +13,7 @@ ember install ember-cli-storagekit
 ```
 
 ## Basic Usage
-Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, and supports the following methods:
+Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, and supports the following async methods:
 
 * setItem
 * getItem
@@ -21,6 +21,9 @@ Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, 
 * clear
 * length
 * key
+
+IMPORTANT: storagekit has been updated to _always_ return a promise. This has been done in order to make way for other
+possible async kv storage services.
 
 Storagekit makes no assumptions about where you would like to make the service available. As such you need to specify your own injections.
 
@@ -50,10 +53,14 @@ Storagekit makes no assumptions about where you would like to make the service a
   actions: {
     savePreferences(preferences) {
       // with storage
-      this.get('storage.local').setItem('preferences', preferences);
+      this.get('storage.local').setItem('preferences', preferences).then(() => {
+        // ...
+      });
       
       // with localStorage
-      this.get('localStorage').setItem('preferences', preferences);
+      this.get('localStorage').setItem('preferences', preferences).then(() => {
+        // ...
+      });
     }
   }
   // ...snip...
@@ -66,7 +73,9 @@ Storagekit makes no assumptions about where you would like to make the service a
   actions: {
     saveSession(session) {
       // with storage
-      this.get('storage.session').setItem('session', session);
+      this.get('storage.session').setItem('session', session).then(() => {
+        // ...
+      });
     
       // with sessionStorage
       this.get('sessionStorage').setItem('session', session);
@@ -82,10 +91,14 @@ Storagekit makes no assumptions about where you would like to make the service a
   actions: {
     storeTemporarily(temporaryData) {
       // with storage
-      this.get('storage.instance').setItem('temporaryData', temporaryData);
+      this.get('storage.instance').setItem('temporaryData', temporaryData).then(() => {
+        // ...
+      });
     
       // with instanceStorage
-      this.get('instanceStorage').setItem('temporaryData', temporaryData);
+      this.get('instanceStorage').setItem('temporaryData', temporaryData).then(() => {
+        // ...
+      });
     }
   }
   // ...snip...
@@ -118,7 +131,9 @@ It is possible to call such methods within the global scope (not recommended). T
 
 ```javascript 
   // ...snip...
-  this.get('storage.local').clear({global: true});
+  this.get('storage.local').clear({global: true}).then(() => {
+    // ...
+  });
   // ...snip...
 ```
 
