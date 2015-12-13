@@ -24,6 +24,7 @@ Storagekit takes care of ```JSON.stringify()``` and ```JSON.parse()``` for you, 
 * clear
 * length
 * key
+* keys
 
 Storagekit makes no assumptions about where you would like to make the service available. As such you need to specify your own injections.
 
