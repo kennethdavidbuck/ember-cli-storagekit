@@ -28,7 +28,7 @@ export default Ember.Service.extend({
    * @public
    */
   setItem(key, value) {
-    this.get('adapter').setItem(key, value);
+    return this.get('adapter').setItem(key, value);
   },
 
   /**
@@ -48,7 +48,7 @@ export default Ember.Service.extend({
    * @public
    */
   removeItem(key) {
-    this.get('adapter').removeItem(key);
+    return this.get('adapter').removeItem(key);
   },
 
   /**
@@ -77,7 +77,7 @@ export default Ember.Service.extend({
    * @public
    */
   clear(options) {
-    this.get('adapter').clear(options);
+    return this.get('adapter').clear(options);
   },
 
   /**

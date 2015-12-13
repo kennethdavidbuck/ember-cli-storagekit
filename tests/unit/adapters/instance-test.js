@@ -1,4 +1,5 @@
 import { moduleFor, test } from 'ember-qunit';
+import Ember from 'ember';
 import JsonSerializer from '../../../storagekit/serializers/json';
 
 /*global sinon*/
@@ -24,7 +25,9 @@ test('Returns null for key that does not exist', function (assert) {
 
   const storageService = this.subject();
 
-  assert.strictEqual(storageService.key('nonExistentKey'), null);
+  storageService.key('nonExistentKey').then((nonExistentKey) => {
+    assert.strictEqual(nonExistentKey, null);
+  });
 });
 
 test('Returns key from index based on keys ordered alphabetically.', function (assert) {
@@ -42,11 +45,15 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
     return {};
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('bar', 'qux');
+  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
+    adapter.key(0).then((key) => {
+      assert.strictEqual(key, 'bar', 'Index zero should be first alphabetical key');
+    });
 
-  assert.strictEqual(adapter.key(0), 'bar', 'Index zero should be first alphabetical key');
-  assert.strictEqual(adapter.key(1), 'foo', 'Index one should be second alphabetical key');
+    adapter.key(1).then((key) => {
+      assert.strictEqual(key, 'foo', 'Index one should be second alphabetical key');
+    });
+  });
 });
 
 test('Properly reorganizes key indices when key is deleted', function (assert) {
@@ -64,12 +71,13 @@ test('Properly reorganizes key indices when key is deleted', function (assert) {
     return {};
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('bar', 'qux');
-
-  adapter.removeItem('bar');
-
-  assert.strictEqual(adapter.key(0), 'foo', 'deleting first value shifts other values towards index 0');
+  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
+    adapter.removeItem('bar').then(() => {
+      adapter.key(0).then((key) => {
+        assert.strictEqual(key, 'foo', 'deleting first value shifts other values towards index 0');
+      });
+    });
+  });
 });
 
 test('Treats keys that are objects uniformly', function (assert) {
@@ -83,10 +91,14 @@ test('Treats keys that are objects uniformly', function (assert) {
     return {};
   });
 
-  adapter.setItem({}, 'foo');
-
-  assert.strictEqual(adapter.getItem({}), 'foo');
-  assert.strictEqual(adapter.getItem({foo: 'bar'}), 'foo', 'a different object be interpreted as the same key');
+  adapter.setItem({}, 'foo').then(() => {
+    adapter.getItem({}).then((item) => {
+      assert.strictEqual(item, 'foo');
+    });
+    adapter.getItem({foo: 'bar'}).then((item) => {
+      assert.strictEqual(item, 'foo', 'a different object be interpreted as the same key');
+    });
+  });
 });
 
 test('Treats keys that are arrays as a string of values', function (assert) {
@@ -100,10 +112,14 @@ test('Treats keys that are arrays as a string of values', function (assert) {
     return {};
   });
 
-  adapter.setItem([1, 2, 3], 'foo');
-
-  assert.strictEqual(adapter.getItem([1, 2, 3]), 'foo');
-  assert.notEqual(adapter.getItem(['a', 'b', 'c']), 'foo', 'a different object be interpreted as the same key');
+  adapter.setItem([1, 2, 3], 'foo').then(() => {
+    adapter.getItem([1, 2, 3]).then((item) => {
+      assert.strictEqual(item, 'foo');
+    });
+    adapter.getItem(['a', 'b', 'c']).then((item) => {
+      assert.notEqual(item, 'foo', 'a different object be interpreted as the same key');
+    });
+  });
 });
 
 test('undefined is a valid key', function (assert) {
@@ -117,11 +133,14 @@ test('undefined is a valid key', function (assert) {
     return {};
   });
 
-  adapter.setItem(undefined, 'bar');
-
-  assert.strictEqual(adapter.getItem(undefined), 'bar');
-
-  assert.strictEqual(adapter.getItem('undefined'), 'bar');
+  adapter.setItem(undefined, 'bar').then(() => {
+    adapter.getItem(undefined).then((item) => {
+      assert.strictEqual(item, 'bar');
+    });
+    adapter.getItem('undefined').then((item) => {
+      assert.strictEqual(item, 'bar');
+    });
+  });
 });
 
 test('null is a valid key', function (assert) {
@@ -135,11 +154,14 @@ test('null is a valid key', function (assert) {
     return {};
   });
 
-  adapter.setItem(null, 'bar');
-
-  assert.strictEqual(adapter.getItem(null), 'bar');
-
-  assert.strictEqual(adapter.getItem('null'), 'bar');
+  adapter.setItem(null, 'bar').then(() => {
+    adapter.getItem(null).then((item) => {
+      assert.strictEqual(item, 'bar');
+    });
+    adapter.getItem('null').then((item) => {
+      assert.strictEqual(item, 'bar');
+    });
+  });
 });
 
 test('keys returns all keys in storage', function (assert) {
@@ -153,10 +175,12 @@ test('keys returns all keys in storage', function (assert) {
     return {};
   });
 
-  adapter.setItem('foo', 'bar');
-
-  assert.equal(adapter.keys().length, 1);
-  assert.equal(adapter.keys()[0], 'foo');
+  adapter.setItem('foo', 'bar').then(() => {
+    adapter.keys().then((keys) => {
+      assert.equal(keys.length, 1);
+      assert.equal(keys[0], 'foo');
+    });
+  });
 });
 
 test('keys returns all keys in alphabetical order', function (assert) {
@@ -170,12 +194,11 @@ test('keys returns all keys in alphabetical order', function (assert) {
     return {};
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('baz', 'qux');
-
-  const keys = adapter.keys();
-
-  assert.equal(keys.length, 2);
-  assert.equal(keys[0], 'baz');
-  assert.equal(keys[1], 'foo');
+  new Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('baz', 'qux')]).then(() => {
+    adapter.keys().then((keys) => {
+      assert.equal(keys.length, 2);
+      assert.equal(keys[0], 'baz');
+      assert.equal(keys[1], 'foo');
+    });
+  });
 });

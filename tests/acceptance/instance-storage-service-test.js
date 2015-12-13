@@ -24,9 +24,11 @@ test('properly sets and gets with . delimited key', function (assert) {
   const key = 'foo.bar';
   const value = 'hello world';
 
-  storageService.setItem(key, value);
-
-  assert.equal(storageService.getItem(key), value, 'returned item should match input item.');
+  storageService.setItem(key, value).then(() => {
+    storageService.getItem(key).then((item) => {
+      assert.equal(item, value, 'returned item should match input item.');
+    });
+  });
 });
 
 test('properly sets and gets string value', function (assert) {
@@ -36,9 +38,11 @@ test('properly sets and gets string value', function (assert) {
   const key = 'foo';
   const value = 'hello world';
 
-  storageService.setItem(key, value);
-
-  assert.equal(storageService.getItem(key), value, 'returned item should match input item.');
+  storageService.setItem(key, value).then(() => {
+    storageService.getItem(key).then((item) => {
+      assert.equal(item, value, 'returned item should match input item.');
+    });
+  });
 });
 
 test('properly sets and gets object value', function (assert) {
@@ -48,9 +52,11 @@ test('properly sets and gets object value', function (assert) {
   const key = 'foo';
   const value = {hello: 'world'};
 
-  storageService.setItem(key, value);
-
-  assert.equal(storageService.getItem(key).hello, value.hello);
+  storageService.setItem(key, value).then(() => {
+    storageService.getItem(key).then((item) => {
+      assert.equal(item.hello, value.hello);
+    });
+  });
 });
 
 test('properly removes an item', function (assert) {
@@ -60,11 +66,13 @@ test('properly removes an item', function (assert) {
   const key = 'foo';
   const value = 'hello world';
 
-  storageService.setItem(key, value);
-
-  storageService.removeItem(key);
-
-  assert.equal(storageService.getItem(key), undefined);
+  storageService.setItem(key, value).then(() => {
+    storageService.removeItem(key).then(() => {
+      storageService.getItem(key).then((item) => {
+        assert.equal(item, undefined);
+      });
+    });
+  });
 });
 
 test('properly clears', function (assert) {
@@ -79,10 +87,17 @@ test('properly clears', function (assert) {
   storageService.setItem(key1, value1);
   storageService.setItem(key2, value2);
 
-  storageService.clear();
+  new Ember.RSVP.all([storageService.setItem(key1, value1), storageService.setItem(key2, value2)]).then(() => {
+    storageService.clear().then(() => {
+      storageService.getItem(key1).then((item) => {
+        assert.equal(item, undefined, `${key1} should be cleared`);
+      });
 
-  assert.equal(storageService.getItem(key1), undefined, `${key1} should be cleared`);
-  assert.equal(storageService.getItem(key2), undefined, `${key2} should be cleared`);
+      storageService.getItem(key2).then((item) => {
+        assert.equal(item, undefined, `${key2} should be cleared`);
+      });
+    });
+  });
 });
 
 test('length', function (assert) {
@@ -90,6 +105,8 @@ test('length', function (assert) {
 
   const storageService = container.lookup('storagekit/service:instance-storage');
 
-  assert.equal(storageService.length(), 0);
+  storageService.length().then((length) => {
+    assert.equal(length, 0);
+  });
 });
 

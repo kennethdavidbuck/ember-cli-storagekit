@@ -26,13 +26,21 @@ export default AbstractAdapter.extend({
    */
   setItem(key, value) {
     this.get('storage').set(this.buildNamespace(key), this.get('serializer').serialize(value));
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
   },
 
   /**
    * @override
    */
   getItem(key) {
-    return this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
+    const item = this.get('serializer').deserialize(this.get('storage').get(this.buildNamespace(key)));
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve(item);
+    });
   },
 
   /**
@@ -40,6 +48,10 @@ export default AbstractAdapter.extend({
    */
   removeItem(key){
     this.get('storage').delete(this.buildNamespace(key));
+
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve();
+    });
   },
 
   /**
@@ -57,7 +69,9 @@ export default AbstractAdapter.extend({
       }
     });
 
-    return keys.sort();
+    return new Ember.RSVP.Promise((resolve) => {
+      resolve(keys.sort());
+    });
   },
 
   /**
@@ -65,9 +79,18 @@ export default AbstractAdapter.extend({
    */
   clear(options) {
     const storage = this.get('storage');
+    const promises = [];
 
-    this.keys(options).forEach((key) => {
-      storage.delete(key);
+    return new Ember.RSVP.Promise((resolve) => {
+      this.keys(options).then((keys) => {
+        keys.forEach((key) => {
+          promises.push(storage.delete(key));
+        });
+
+        new Ember.RSVP.all(promises).then(() => {
+          resolve();
+        });
+      });
     });
   }
 });
