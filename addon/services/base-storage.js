@@ -23,7 +23,7 @@ export default Ember.Service.extend({
   /**
    * Delegates a setItem call to the underlying storage source
    * @method setItem
-   * @param {String} key
+   * @param {string} key
    * @param {*} value
    * @public
    */
@@ -34,7 +34,7 @@ export default Ember.Service.extend({
   /**
    * Delegates a getItem call to the underlying storage source
    * @method getItem
-   * @param {String} key
+   * @param {string} key
    * @public
    */
   getItem(key) {
@@ -44,7 +44,7 @@ export default Ember.Service.extend({
   /**
    * Delegates a removeItem call to the underlying storage source
    * @method removeItem
-   * @param {String} key
+   * @param {string} key
    * @public
    */
   removeItem(key) {
@@ -55,38 +55,34 @@ export default Ember.Service.extend({
    * Delegates a key call to the underlying storage source.
    * @method key
    * @param {Number} index The index of the key to retrieve.
-   * @param {Object} options
-   * @return {String|null} The key at the given index or null if it does not exist.
+   * @return {string|null} The key at the given index or null if it does not exist.
    */
-  key(index, options) {
-    return this.get('adapter').key(index, options);
+  key(index) {
+    return this.get('adapter').key(index);
   },
 
   /**
    * Delegates a keys call to the underlying storage source
-   * @param {Object} options Whether all storage keys or just namespaced keys should be considered.
    */
-  keys(options) {
-    return this.get('adapter').keys(options);
+  keys() {
+    return this.get('adapter').keys();
   },
 
   /**
    * Clears the underlying storage source
    * @method clear
-   * @param {Object} options
    * @public
    */
-  clear(options) {
-    return this.get('adapter').clear(options);
+  clear() {
+    return this.get('adapter').clear();
   },
 
   /**
    * Delegates a length call the underlying storage source
    * @method length
-   * @param {Object} options
    * @public
    */
-  length(options) {
-    return this.get('adapter').length(options);
+  length() {
+    return this.get('adapter').length();
   }
 });

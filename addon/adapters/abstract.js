@@ -1,7 +1,7 @@
 import BuildNamespaceMixin from '../mixins/build-namespace';
 import Ember from 'ember';
 
-const {merge, RSVP} = Ember;
+const {RSVP} = Ember;
 const {Promise} = RSVP;
 
 /**
@@ -34,7 +34,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Sets a value into storage under a provided key
    * @method setItem
-   * @param {String} key The key name to store the given value under
+   * @param {string} key The key name to store the given value under
    * @param {*} value A value to store under a specified key
    * @return {Promise}
    * @public
@@ -74,26 +74,22 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * @method key
    */
-  key(index, options) {
-     return this.keys(options).then(keys => keys[index] || null);
+  key(index) {
+     return this.keys().then(keys => keys[index] || null);
   },
 
   /**
    * Returns all the keys that are currently in the storage "world" in sorted order
    * (where the namespace defines the world boundary).
    * @method keys
-   * @param {Object} options
    * @return Promise.<[string]>
    * @public
    */
-  keys(options) {
-    const _options = merge({
-      global: false
-    }, options || {});
-
-    const keys = Object.keys(this.get('storage')).filter(
-      key => _options.global || this.isNamespacedKey(key)
-    ).sort();
+  keys() {
+    const keys = Object.keys(this.get('storage'))
+      .filter(key => this.isNamespaced(key))
+      .map(key => this.stripNamespace(key))
+      .sort();
 
     return Promise.resolve(Ember.A(keys));
   },
@@ -101,13 +97,12 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * Clears all key/value pairs from storage
    * @method clear
-   * @param {Object} options
    * @return {Promise}
    * @public
    */
-  clear(options) {
-    return this.keys(options).then(keys => RSVP.all(
-      keys.map(key => this.get('storage').removeItem(key)))
+  clear() {
+    return this.keys().then(keys => RSVP.all(
+      keys.map(key => this.removeItem(key)))
     );
   },
 
@@ -118,7 +113,7 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
    * @return {Promise.<number>} The number of items in storage
    * @public
    */
-  length(options) {
-    return this.keys(options).then(keys => keys.length);
+  length() {
+    return this.keys().then(keys => keys.length);
   }
 });

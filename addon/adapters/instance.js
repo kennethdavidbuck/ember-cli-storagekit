@@ -1,7 +1,7 @@
 import AbstractAdapter from './abstract';
 import Ember from 'ember';
 
-const {merge, RSVP} = Ember;
+const {RSVP} = Ember;
 const {Promise} = RSVP;
 
 /**
@@ -52,15 +52,12 @@ export default AbstractAdapter.extend({
   /**
    * @override
    */
-  keys(options) {
+  keys() {
     const keys = [];
-    const _options = merge({
-      global: false
-    }, options || {});
 
     this.get('storage').forEach((value, key) => {
-      if(_options.global || this.isNamespacedKey(key)) {
-        keys.push(key);
+      if(this.isNamespaced(key)) {
+        keys.push(this.stripNamespace(key));
       }
     });
 
@@ -70,9 +67,9 @@ export default AbstractAdapter.extend({
   /**
    * @override
    */
-  clear(options) {
-    return this.keys(options).then(keys => RSVP.all(
-      keys.map(key => this.get('storage').delete(key)))
+  clear() {
+    return this.keys().then(keys => RSVP.all(
+      keys.map(key => this.removeItem(key)))
     );
   }
 });

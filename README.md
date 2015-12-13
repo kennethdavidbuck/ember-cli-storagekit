@@ -133,9 +133,7 @@ It is possible to call such methods within the global scope (not recommended). T
 
 ```javascript 
   // ...snip...
-  this.get('storage.local').clear({global: true}).then(() => {
-    // ...
-  });
+  this.get('storage.local').clear({global: true});
   // ...snip...
 ```
 
