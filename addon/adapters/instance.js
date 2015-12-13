@@ -52,15 +52,15 @@ export default AbstractAdapter.extend({
       }
     });
 
-    return keys.map(key => this.stripNamespace(key)).sort();
+    return keys
+      .map(key => this.stripNamespace(key))
+      .sort();
   },
 
   /**
    * @override
    */
   clear() {
-    this.keys().forEach((key) => {
-      this.removeItem(key);
-    });
+    this.keys().forEach(key => this.removeItem(key));
   }
 });
