@@ -109,7 +109,6 @@ export default Ember.Object.extend(BuildNamespaceMixin, {
   /**
    * The current length/number of items in storage
    * @method length
-   * @method {Object} options
    * @return {Promise.<number>} The number of items in storage
    * @public
    */
