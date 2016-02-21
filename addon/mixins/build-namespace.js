@@ -31,8 +31,6 @@ export default Ember.Mixin.create({
 
     const owner = Ember.getOwner(this);
 
-    Ember.Logger.log(owner);
-
     if(isBlank(namespace) && owner) {
       const env = owner.lookup('application:main');
 
