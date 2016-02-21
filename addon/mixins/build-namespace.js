@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {isPresent, isBlank} = Ember;
+const {get, isPresent, isBlank} = Ember;
 
 /**
  * @module ember-cli-storagekit
@@ -34,9 +34,7 @@ export default Ember.Mixin.create({
     if(isBlank(namespace) && owner) {
       const env = owner.lookup('application:main');
 
-      if(env.hasOwnProperty('storagekit')) {
-        namespace = env.storagekit.namespace;
-      }
+      namespace = get(env, 'storagekit.namespace');
     }
 
     return namespace || '';
