@@ -34,8 +34,6 @@ export default Ember.Mixin.create({
     if(isBlank(namespace) && owner) {
       const env = owner.lookup('application:main');
 
-      Ember.Logger.log(env);
-
       if(env.hasOwnProperty('storagekit')) {
         namespace = env.storagekit.namespace;
       }
