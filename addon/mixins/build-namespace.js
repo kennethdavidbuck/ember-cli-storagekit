@@ -29,11 +29,17 @@ export default Ember.Mixin.create({
   _namespace: Ember.computed('namespace', function () {
     let namespace = this.get('namespace');
 
-    if(isBlank(namespace) && this.container) {
-      const env = this.container.lookupFactory('config:environment');
+    const owner = Ember.getOwner(this);
 
-      if(env.hasOwnProperty('APP') && env.APP.hasOwnProperty('storagekit')) {
-        namespace = env.APP.storagekit.namespace;
+    Ember.Logger.log(owner);
+
+    if(isBlank(namespace) && owner) {
+      const env = owner.lookup('application:main');
+
+      Ember.Logger.log(env);
+
+      if(env.hasOwnProperty('storagekit')) {
+        namespace = env.storagekit.namespace;
       }
     }
 
