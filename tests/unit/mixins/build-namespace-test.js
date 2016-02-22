@@ -2,7 +2,19 @@ import Ember from 'ember';
 import BuildNamespaceMixin from '../../../storagekit/mixins/build-namespace';
 import { module, test } from 'qunit';
 
-module('Unit | Mixin | Build Namespace');
+/*global sinon*/
+
+let sandbox = sinon.sandbox;
+
+module('Unit | Mixin | Build Namespace', {
+  unit: true,
+  beforeEach() {
+
+  },
+  afterEach() {
+    sandbox.restore();
+  }
+});
 
 const BuildNamespaceObject = Ember.Object.extend(BuildNamespaceMixin);
 
@@ -27,19 +39,19 @@ test('Correctly generates namespace key when valid namespace string is specified
 test('Correctly generates namespace key from environment config', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject = BuildNamespaceObject.create({
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'foo'
-            }
+          storagekit: {
+            namespace: 'foo'
           }
         };
       }
-    }
+    };
   });
+
+  const buildNamespaceObject = BuildNamespaceObject.create();
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'foo:bar');
 });
@@ -47,19 +59,19 @@ test('Correctly generates namespace key from environment config', function (asse
 test('Setting namespace directly overrides environment config value', function (assert) {
   assert.expect(2);
 
-  const buildNamespaceObject = BuildNamespaceObject.create({
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'foo'
-            }
+          storagekit: {
+            namespace: 'foo'
           }
         };
       }
-    }
+    };
   });
+
+  const buildNamespaceObject = BuildNamespaceObject.create();
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'foo:bar');
 
@@ -71,19 +83,20 @@ test('Setting namespace directly overrides environment config value', function (
 test('Config namespace is not used if namespace property is already present', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject = BuildNamespaceObject.create({
-    namespace: 'use-me',
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'do-not-use-me'
-            }
+          storagekit: {
+            namespace: 'do-not-use-me'
           }
         };
       }
-    }
+    };
+  });
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'use-me'
   });
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'use-me:bar');

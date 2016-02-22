@@ -41,10 +41,6 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
     }
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
     adapter.key(0).then((key) => {
       assert.strictEqual(key, 'bar', 'Index zero should be first alphabetical key');
@@ -67,10 +63,6 @@ test('Properly reorganizes key indices when key is deleted', function (assert) {
     }
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('bar', 'qux')]).then(() => {
     adapter.removeItem('bar').then(() => {
       adapter.key(0).then((key) => {
@@ -85,10 +77,6 @@ test('Treats keys that are objects uniformly', function (assert) {
 
   const adapter = this.subject({
     serializer: JsonSerializer.create()
-  });
-
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
   });
 
   adapter.setItem({}, 'foo').then(() => {
@@ -108,10 +96,6 @@ test('Treats keys that are arrays as a string of values', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   adapter.setItem([1, 2, 3], 'foo').then(() => {
     adapter.getItem([1, 2, 3]).then((item) => {
       assert.strictEqual(item, 'foo');
@@ -129,10 +113,6 @@ test('undefined is a valid key', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   adapter.setItem(undefined, 'bar').then(() => {
     adapter.getItem(undefined).then((item) => {
       assert.strictEqual(item, 'bar');
@@ -148,10 +128,6 @@ test('null is a valid key', function (assert) {
 
   const adapter = this.subject({
     serializer: JsonSerializer.create()
-  });
-
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
   });
 
   adapter.setItem(null, 'bar').then(() => {
@@ -172,10 +148,6 @@ test('keys returns all keys in storage when namespace is present', function (ass
     serializer: JsonSerializer.create()
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   adapter.setItem('foo', 'bar').then(() => {
     adapter.keys().then((keys) => {
       assert.equal(keys.length, 1);
@@ -191,10 +163,6 @@ test('keys returns all keys in storage when namespace is not present', function 
     serializer: JsonSerializer.create()
   });
 
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
-  });
-
   adapter.setItem('foo', 'bar').then(() => {
     adapter.keys().then((keys) => {
       assert.equal(keys.length, 1);
@@ -208,10 +176,6 @@ test('keys returns all keys in alphabetical order', function (assert) {
 
   const adapter = this.subject({
     serializer: JsonSerializer.create()
-  });
-
-  sinon.stub(adapter.get('container'), 'lookupFactory', () => {
-    return {};
   });
 
   Ember.RSVP.all([adapter.setItem('foo', 'bar'), adapter.setItem('baz', 'qux')]).then(() => {
