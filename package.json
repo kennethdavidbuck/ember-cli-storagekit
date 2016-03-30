@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-storagekit",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A thin layer on top of the HTML5 localStorage and sessionStorage services",
   "directories": {
     "doc": "doc",

@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-storagekit",
-  "description": "The default blueprint for ember-cli addons.",
-  "version": "0.0.0",
+  "description": "A thin layer on top of the HTML5 localStorage and sessionStorage services",
+  "version": "0.4.0",
   "options": {
     "paths": [
       "addon"
