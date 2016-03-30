@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import InjectStoragekitInitializer from 'dummy/initializers/inject-storagekit';
 import { module, test } from 'qunit';
-import StorageSupportUtility from 'ember-cli-storagekit/utilities/storage-support';
 
 /*global sinon*/
 
