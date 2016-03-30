@@ -1,5 +1,12 @@
 # ember-cli-storagekit change log
 
+### 0.4.0
+- [Upgrade] Upgraded to Ember 2.2.0
+- [Bugfix] Removed namespace keys returned from #keys method
+- [Improvement] Removed options argument for global clearing of storage [only applies to storage world now]
+- [Improvement] Removed double pass on keys array in #keys method
+- [Cleanup] Switched to using es6 expressions where applicable
+
 ### 0.3.2
 - [Bugfix] Updated initializers to use backwards compatible means of accessing application instance
 - [Cleanup] Switched to using sinon for stubbing adapter container in unit tests.
