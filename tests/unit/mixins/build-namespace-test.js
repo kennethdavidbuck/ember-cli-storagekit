@@ -2,14 +2,26 @@ import Ember from 'ember';
 import BuildNamespaceMixin from '../../../storagekit/mixins/build-namespace';
 import { module, test } from 'qunit';
 
-module('Unit | Mixin | Build Namespace');
+/*global sinon*/
+
+let sandbox = sinon.sandbox;
+
+module('Unit | Mixin | Build Namespace', {
+  unit: true,
+  beforeEach() {
+
+  },
+  afterEach() {
+    sandbox.restore();
+  }
+});
 
 const BuildNamespaceObject = Ember.Object.extend(BuildNamespaceMixin);
 
 test('Correctly generates namespace key when namespace is the empty string.', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create();
+  const buildNamespaceObject = BuildNamespaceObject.create();
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('foo'), 'foo');
 });
@@ -17,7 +29,7 @@ test('Correctly generates namespace key when namespace is the empty string.', fu
 test('Correctly generates namespace key when valid namespace string is specified.', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
+  const buildNamespaceObject = BuildNamespaceObject.create({
     namespace: 'foo'
   });
 
@@ -27,19 +39,19 @@ test('Correctly generates namespace key when valid namespace string is specified
 test('Correctly generates namespace key from environment config', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'foo'
-            }
+          storagekit: {
+            namespace: 'foo'
           }
         };
       }
-    }
+    };
   });
+
+  const buildNamespaceObject = BuildNamespaceObject.create();
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'foo:bar');
 });
@@ -47,19 +59,19 @@ test('Correctly generates namespace key from environment config', function (asse
 test('Setting namespace directly overrides environment config value', function (assert) {
   assert.expect(2);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'foo'
-            }
+          storagekit: {
+            namespace: 'foo'
           }
         };
       }
-    }
+    };
   });
+
+  const buildNamespaceObject = BuildNamespaceObject.create();
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'foo:bar');
 
@@ -71,19 +83,20 @@ test('Setting namespace directly overrides environment config value', function (
 test('Config namespace is not used if namespace property is already present', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
-    namespace: 'use-me',
-    container: {
-      lookupFactory() {
+  sandbox.stub(Ember, 'getOwner', () => {
+    return {
+      lookup() {
         return {
-          APP: {
-            storagekit: {
-              namespace: 'do-not-use-me'
-            }
+          storagekit: {
+            namespace: 'do-not-use-me'
           }
         };
       }
-    }
+    };
+  });
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'use-me'
   });
 
   assert.strictEqual(buildNamespaceObject.buildNamespace('bar'), 'use-me:bar');
@@ -92,7 +105,7 @@ test('Config namespace is not used if namespace property is already present', fu
 test('Correctly generates namespace key when valid namespace is undefined.', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
+  const buildNamespaceObject = BuildNamespaceObject.create({
     namespace: undefined
   });
 
@@ -102,7 +115,7 @@ test('Correctly generates namespace key when valid namespace is undefined.', fun
 test('Correctly generates namespace key when valid namespace is null.', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
+  const buildNamespaceObject = BuildNamespaceObject.create({
     namespace: null
   });
 
@@ -112,7 +125,7 @@ test('Correctly generates namespace key when valid namespace is null.', function
 test('Correctly generates namespace key when valid namespace is false.', function (assert) {
   assert.expect(1);
 
-  const buildNamespaceObject =  BuildNamespaceObject.create({
+  const buildNamespaceObject = BuildNamespaceObject.create({
     namespace: false
   });
 
@@ -126,7 +139,7 @@ test('determines a key is namespaced when when no namespace specified (global na
     namespace: false
   });
 
-  assert.ok(buildNamespaceObject.isNamespacedKey('foo'), 'no namespace means all keys are globally namespaced.');
+  assert.ok(buildNamespaceObject.isNamespaced('foo'), 'no namespace means all keys are globally namespaced.');
 });
 
 
@@ -137,7 +150,7 @@ test('determines a key is namespaced when namespace specified', function (assert
     namespace: 'foo'
   });
 
-  assert.ok(buildNamespaceObject.isNamespacedKey('foo:bar'), 'should determine key is namespaced.');
+  assert.ok(buildNamespaceObject.isNamespaced('foo:bar'), 'should determine key is namespaced.');
 });
 
 test('determines a key is not namespaced', function (assert) {
@@ -145,5 +158,39 @@ test('determines a key is not namespaced', function (assert) {
     namespace: 'foo'
   });
 
-  assert.ok(!buildNamespaceObject.isNamespacedKey('bar'), 'should determine key is not namespaced.');
+  assert.ok(!buildNamespaceObject.isNamespaced('bar'), 'should determine key is not namespaced.');
+});
+
+test('extracts key from namespace when namespace provided', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  assert.equal(buildNamespaceObject.stripNamespace('foo:bar'), 'bar');
+});
+
+test('extracts key from namespace when no namespace provided', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: null
+  });
+
+  assert.equal(buildNamespaceObject.stripNamespace('bar'), 'bar');
+});
+
+test('throws error when attempting to extract non-namespaced key', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  try {
+    buildNamespaceObject.stripNamespace('bar');
+  } catch (e) {
+    assert.ok(true);
+  }
 });

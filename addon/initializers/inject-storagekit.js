@@ -1,6 +1,6 @@
 import StorageSupportUtility from '../utilities/storage-support';
 
-export function initialize() {
+export default function () {
   // keep backwards compatible with previous versions having 2 arguments (container, application)
   let application = arguments[1] || arguments[0];
 
@@ -17,9 +17,9 @@ export function initialize() {
 
   // local storage injection
   let localType = 'storagekit/service:local-storage';
-  let localOptions = {singleton:true};
+  let localOptions = {singleton: true};
 
-  if(!StorageSupportUtility.has('localStorage')) {
+  if (!StorageSupportUtility.has('localStorage')) {
     localType = 'storagekit/service:instance-storage';
     localOptions.singleton = false;
   }
@@ -28,17 +28,12 @@ export function initialize() {
 
   // session storage injection
   let sessionType = 'storagekit/service:session-storage';
-  let sessionOptions = {singleton:true};
+  let sessionOptions = {singleton: true};
 
-  if(!StorageSupportUtility.has('sessionStorage')) {
+  if (!StorageSupportUtility.has('sessionStorage')) {
     sessionType = 'storagekit/service:instance-storage';
     sessionOptions.singleton = false;
   }
 
   application.inject('storagekit/service:storage', 'session', sessionType, sessionOptions);
 }
-
-export default {
-  name: 'inject-storagekit',
-  initialize: initialize
-};

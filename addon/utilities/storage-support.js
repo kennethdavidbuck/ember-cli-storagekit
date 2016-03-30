@@ -27,7 +27,7 @@ export default Ember.Namespace.create({
    * ex. localStorage, sessionStorage
    * @method has
    * @param {String} type The storage type to be checked for support in the current environment.
-   * @return {Boolean} Whether or not the given storage type is supported.
+   * @return {boolean} Whether or not the given storage type is supported.
    * @public
    */
   has(type) {

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const {isPresent, isBlank} = Ember;
+const {get, isPresent, isBlank} = Ember;
 
 /**
  * @module ember-cli-storagekit
@@ -17,24 +17,24 @@ export default Ember.Mixin.create({
    * ```javascript
    *  'my-namespace:my-key'
    * ```
-   * @property {String} namespace
+   * @property {string} namespace
    * @default ""
    */
   namespace: '',
 
   /**
-   * @property {String} _namespace
+   * @property {string} _namespace
    * @private
    */
   _namespace: Ember.computed('namespace', function () {
     let namespace = this.get('namespace');
 
-    if(isBlank(namespace) && this.container) {
-      const env = this.container.lookupFactory('config:environment');
+    const owner = Ember.getOwner(this);
 
-      if(env.hasOwnProperty('APP') && env.APP.hasOwnProperty('storagekit')) {
-        namespace = env.APP.storagekit.namespace;
-      }
+    if(isBlank(namespace) && owner) {
+      const env = owner.lookup('application:main');
+
+      namespace = get(env, 'storagekit.namespace');
     }
 
     return namespace || '';
@@ -42,7 +42,7 @@ export default Ember.Mixin.create({
 
   /**
    * @method namespaceKey
-   * @param {String} key A key to be namespaced.
+   * @param {string} key A key to be namespaced.
    * @public
    */
   buildNamespace(key) {
@@ -51,11 +51,38 @@ export default Ember.Mixin.create({
   },
 
   /**
+   * strips the namespace from a namespaced key
+   * @method stripNamespace
+   * @param {string} key A namespaced key to be stripped
+   * @return {string} The key with its namespace removed
+   * @public
+   */
+  stripNamespace(key) {
+    Ember.assert(`${key} is not a namespaced key`, this.isNamespaced(key));
+
+    return `${key}`.slice(this.buildNamespace('').length);
+  },
+
+  /**
    * Determines whether or not a provided key is namespaced.
    * @method isNamespaced
    * @param {string} key The key to check the namespace status of.
+   * @return {boolean}
+   * @public
+   */
+  isNamespaced(key) {
+    return `${key}`.indexOf(this.buildNamespace('')) === 0;
+  },
+
+  /**
+   * Determines whether or not a provided key is namespaced.
+   * @method isNamespacedKey
+   * @param {string} key The key to check the namespace status of.
+   * @return {boolean}
+   * @public
+   * @deprecated please use #isNamespaced instead.
    */
   isNamespacedKey(key) {
-    return `${key}`.indexOf(this.buildNamespace('')) === 0;
+    return this.isNamespaced(key);
   }
 });
