@@ -1,8 +1,12 @@
 import Ember from 'ember';
 import InjectStoragekitInitializer from 'dummy/initializers/inject-storagekit';
 import { module, test } from 'qunit';
+import StorageSupportUtility from 'ember-cli-storagekit/utilities/storage-support';
+
+/*global sinon*/
 
 let application;
+let sandbox = sinon.sandbox;
 
 module('Unit | Initializer | inject storagekit', {
   beforeEach() {
@@ -10,11 +14,16 @@ module('Unit | Initializer | inject storagekit', {
       application = Ember.Application.create();
       application.deferReadiness();
     });
+  },
+  afterEach() {
+    sandbox.restore();
   }
 });
 
 // Replace this with your real tests.
 test('it works', function(assert) {
+  assert.expect(1);
+
   InjectStoragekitInitializer.initialize(application);
 
   // you would normally confirm the results of the initializer here

@@ -194,3 +194,17 @@ test('throws error when attempting to extract non-namespaced key', function (ass
     assert.ok(true);
   }
 });
+
+test('[deprecated] isNamespacedKey delegates to namespacedKey', function (assert) {
+  assert.expect(1);
+
+  const buildNamespaceObject = BuildNamespaceObject.create({
+    namespace: 'foo'
+  });
+
+  const spy = sandbox.spy(buildNamespaceObject, 'isNamespaced');
+
+  buildNamespaceObject.isNamespacedKey('foo', 'should delegate to isNamespaced');
+
+  assert.ok(spy.calledOnce);
+});
