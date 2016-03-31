@@ -15,9 +15,9 @@ export default function () {
   application.register('storagekit/service:local-storage', LocalStorgeFactory);
 
   const hasSessionStorageSupport = StorageSupportUtility.has('sessionStorage');
-  const SessionStoragFactory = hasSessionStorageSupport ? SessionStorageService : InstanceStorageService;
+  const SessionStorageFactory = hasSessionStorageSupport ? SessionStorageService : InstanceStorageService;
 
-  application.register('storagekit/service:session-storage', SessionStoragFactory);
+  application.register('storagekit/service:session-storage', SessionStorageFactory);
 
   application.inject('storagekit/service:storage', 'local', 'storagekit/service:local-storage');
   application.inject('storagekit/service:storage', 'session', 'storagekit/service:session-storage');
