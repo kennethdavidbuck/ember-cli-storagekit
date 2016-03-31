@@ -1,39 +1,34 @@
+import InstanceStorageService from 'ember-cli-storagekit/services/instance-storage';
+import LocalStorageService from 'ember-cli-storagekit/services/local-storage';
+import SessionStorageService from 'ember-cli-storagekit/services/session-storage';
 import StorageSupportUtility from '../utilities/storage-support';
 
 export default function () {
-  // keep backwards compatible with previous versions having 2 arguments (container, application)
+  // keep backwards compatibility with previous versions having 2 arguments (container, application)
   let application = arguments[1] || arguments[0];
 
-  // serializer injections
-  application.inject('storagekit/adapter', 'serializer', 'storagekit/serializer:json');
+  application.register('storagekit/service:instance-storage', InstanceStorageService);
+
+  const hasLocalStorageSupport = StorageSupportUtility.has('localStorage');
+  const LocalStorgeFactory = hasLocalStorageSupport ? LocalStorageService : InstanceStorageService;
+
+  application.register('storagekit/service:local-storage', LocalStorgeFactory);
+
+  const hasSessionStorageSupport = StorageSupportUtility.has('sessionStorage');
+  const SessionStoragFactory = hasSessionStorageSupport ? SessionStorageService : InstanceStorageService;
+
+  application.register('storagekit/service:session-storage', SessionStoragFactory);
+
+  application.inject('storagekit/service:storage', 'local', 'storagekit/service:local-storage');
+  application.inject('storagekit/service:storage', 'session', 'storagekit/service:session-storage');
+
+  application.inject('storagekit/service:storage', 'instance', 'storagekit/service:instance-storage');
 
   // adapter injections
   application.inject('storagekit/service:instance-storage', 'adapter', 'storagekit/adapter:instance');
   application.inject('storagekit/service:local-storage', 'adapter', 'storagekit/adapter:local');
   application.inject('storagekit/service:session-storage', 'adapter', 'storagekit/adapter:session');
 
-  // instance storage injection
-  application.inject('storagekit/service:storage', 'instance', 'storagekit/service:instance-storage');
-
-  // local storage injection
-  let localType = 'storagekit/service:local-storage';
-  let localOptions = {singleton: true};
-
-  if (!StorageSupportUtility.has('localStorage')) {
-    localType = 'storagekit/service:instance-storage';
-    localOptions.singleton = false;
-  }
-
-  application.inject('storagekit/service:storage', 'local', localType, localOptions);
-
-  // session storage injection
-  let sessionType = 'storagekit/service:session-storage';
-  let sessionOptions = {singleton: true};
-
-  if (!StorageSupportUtility.has('sessionStorage')) {
-    sessionType = 'storagekit/service:instance-storage';
-    sessionOptions.singleton = false;
-  }
-
-  application.inject('storagekit/service:storage', 'session', sessionType, sessionOptions);
+  // serializer injections
+  application.inject('storagekit/adapter', 'serializer', 'storagekit/serializer:json');
 }
