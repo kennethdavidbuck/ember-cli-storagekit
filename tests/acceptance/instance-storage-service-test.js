@@ -115,4 +115,3 @@ test('#keys returns correct key set', function (assert) {
 
   assert.deepEqual(storageService.keys(), ['baz', 'foo']);
 });
-
