@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 import JsonSerializer from '../../../storagekit/serializers/json';
 
@@ -38,8 +39,10 @@ test('Returns key from index based on keys ordered alphabetically.', function (a
     }
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('bar', 'qux');
+  Ember.run(() => {
+    adapter.setItem('foo', 'bar');
+    adapter.setItem('bar', 'qux');
+  });
 
   assert.strictEqual(adapter.key(0), 'bar', 'Index zero should be first alphabetical key');
   assert.strictEqual(adapter.key(1), 'foo', 'Index one should be second alphabetical key');
@@ -56,8 +59,10 @@ test('Properly reorganizes key indices when key is deleted', function (assert) {
     }
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('bar', 'qux');
+  Ember.run(() => {
+    adapter.setItem('foo', 'bar');
+    adapter.setItem('bar', 'qux');
+  });
 
   adapter.removeItem('bar');
 
@@ -71,7 +76,9 @@ test('Treats keys that are objects uniformly', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem({}, 'foo');
+  Ember.run(() => {
+    adapter.setItem({}, 'foo');
+  });
 
   assert.strictEqual(adapter.getItem({}), 'foo');
   assert.strictEqual(adapter.getItem({foo: 'bar'}), 'foo', 'a different object be interpreted as the same key');
@@ -84,7 +91,9 @@ test('Treats keys that are arrays as a string of values', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem([1, 2, 3], 'foo');
+  Ember.run(() => {
+    adapter.setItem([1, 2, 3], 'foo');
+  });
 
   assert.strictEqual(adapter.getItem([1, 2, 3]), 'foo');
   assert.notEqual(adapter.getItem(['a', 'b', 'c']), 'foo', 'a different object be interpreted as the same key');
@@ -97,10 +106,11 @@ test('undefined is a valid key', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem(undefined, 'bar');
+  Ember.run(() => {
+    adapter.setItem(undefined, 'bar');
+  });
 
   assert.strictEqual(adapter.getItem(undefined), 'bar');
-
   assert.strictEqual(adapter.getItem('undefined'), 'bar');
 });
 
@@ -111,10 +121,11 @@ test('null is a valid key', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem(null, 'bar');
+  Ember.run(() => {
+    adapter.setItem(null, 'bar');
+  });
 
   assert.strictEqual(adapter.getItem(null), 'bar');
-
   assert.strictEqual(adapter.getItem('null'), 'bar');
 });
 
@@ -126,7 +137,9 @@ test('keys returns all keys in storage when namespace is present', function (ass
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem('foo', 'bar');
+  Ember.run(() => {
+    adapter.setItem('foo', 'bar');
+  });
 
   assert.equal(adapter.keys().length, 1);
   assert.equal(adapter.keys()[0], 'foo');
@@ -139,7 +152,9 @@ test('keys returns all keys in storage when namespace is not present', function 
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem('foo', 'bar');
+  Ember.run(() => {
+    adapter.setItem('foo', 'bar');
+  });
 
   assert.equal(adapter.keys().length, 1);
   assert.equal(adapter.keys()[0], 'foo');
@@ -152,8 +167,10 @@ test('keys returns all keys in alphabetical order', function (assert) {
     serializer: JsonSerializer.create()
   });
 
-  adapter.setItem('foo', 'bar');
-  adapter.setItem('baz', 'qux');
+  Ember.run(() => {
+    adapter.setItem('foo', 'bar');
+    adapter.setItem('baz', 'qux');
+  });
 
   const keys = adapter.keys();
 
