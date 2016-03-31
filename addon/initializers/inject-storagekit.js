@@ -7,21 +7,22 @@ export default function () {
   // keep backwards compatibility with previous versions having 2 arguments (container, application)
   let application = arguments[1] || arguments[0];
 
-  application.register('storagekit/service:instance-storage', InstanceStorageService);
-
+  // service registrations
   const hasLocalStorageSupport = StorageSupportUtility.has('localStorage');
-  const LocalStorgeFactory = hasLocalStorageSupport ? LocalStorageService : InstanceStorageService;
+  const LocalStorageFactory = hasLocalStorageSupport ? LocalStorageService : InstanceStorageService;
 
-  application.register('storagekit/service:local-storage', LocalStorgeFactory);
+  application.register('storagekit/service:local-storage', LocalStorageFactory);
 
   const hasSessionStorageSupport = StorageSupportUtility.has('sessionStorage');
   const SessionStorageFactory = hasSessionStorageSupport ? SessionStorageService : InstanceStorageService;
 
   application.register('storagekit/service:session-storage', SessionStorageFactory);
 
+  application.register('storagekit/service:instance-storage', InstanceStorageService);
+
+  // service injections
   application.inject('storagekit/service:storage', 'local', 'storagekit/service:local-storage');
   application.inject('storagekit/service:storage', 'session', 'storagekit/service:session-storage');
-
   application.inject('storagekit/service:storage', 'instance', 'storagekit/service:instance-storage');
 
   // adapter injections
