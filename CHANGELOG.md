@@ -1,5 +1,11 @@
 # ember-cli-storagekit change log
 
+### 0.4.1
+- [Bugfix] Updated storage service injection strategy to register instance-storage as fallback instead of applying strategy
+at injection time. Fixes issue where multiple unique instances of instance storage service could be created when 
+localStorage/sessionStorage are not available.
+- [Improvement] Upped test coverage
+
 ### 0.4.0
 - [Upgrade] Upgraded to Ember 2.2.0
 - [Bugfix] Removed namespace keys returned from #keys method

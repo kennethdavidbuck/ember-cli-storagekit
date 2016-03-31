@@ -93,3 +93,25 @@ test('length', function (assert) {
   assert.equal(storageService.length(), 0);
 });
 
+test('key returns correct index', function (assert) {
+  assert.expect(2);
+
+  const storageService = container.lookup('storagekit/service:instance-storage');
+
+  storageService.setItem('foo', 'bar');
+  storageService.setItem('baz', 'qux');
+
+  assert.equal(storageService.key(0), 'baz');
+  assert.equal(storageService.key(1), 'foo');
+});
+
+test('#keys returns correct key set', function (assert) {
+  assert.expect(1);
+
+  const storageService = container.lookup('storagekit/service:instance-storage');
+
+  storageService.setItem('foo', 'bar');
+  storageService.setItem('baz', 'qux');
+
+  assert.deepEqual(storageService.keys(), ['baz', 'foo']);
+});
