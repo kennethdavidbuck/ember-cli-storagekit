@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import StorageSupportUtility from '../../../storagekit/utilities/storage-support';
 import { module, test } from 'qunit';
+import wait from 'ember-test-helpers/wait';
 
-module('Unit | Utility | Storage Support', {});
+module('Unit | Utility | Storage Support');
 
 // Replace this with your real tests.
 test('it exists', function (assert) {
@@ -15,13 +16,16 @@ test('Correctly determines that there is localStorage support', function (assert
   Ember.run(() => {
     StorageSupportUtility.set('global', {
       localStorage: {
+        setItem() {},
         getItem() {},
-        setItem() {}
+        removeItem() {}
       }
     });
   });
 
-  assert.ok(StorageSupportUtility.has('localStorage'), 'Should determine that there is no storage support.');
+  return wait().then(() => {
+    assert.ok(StorageSupportUtility.has('localStorage'), 'Should determine that there is no storage support.');
+  });
 });
 
 test('Correctly determines that there is no localStorage support', function (assert) {
@@ -31,7 +35,9 @@ test('Correctly determines that there is no localStorage support', function (ass
     StorageSupportUtility.set('global', {});
   });
 
-  assert.notOk(StorageSupportUtility.has('localStorage'), 'Should determine that there is storage support.');
+  return wait().then(() => {
+    assert.notOk(StorageSupportUtility.has('localStorage'), 'Should determine that there is storage support.');
+  });
 });
 
 test('Correctly determines that there is sessionStorage support', function (assert) {
@@ -41,12 +47,15 @@ test('Correctly determines that there is sessionStorage support', function (asse
     StorageSupportUtility.set('global', {
       sessionStorage: {
         setItem() {},
-        getItem() {}
+        getItem() {},
+        removeItem() {}
       }
     });
   });
 
-  assert.ok(StorageSupportUtility.has('sessionStorage'), 'Should determine that there is no storage support.');
+  return wait().then(() => {
+    assert.ok(StorageSupportUtility.has('sessionStorage'), 'Should determine that there is no storage support.');
+  });
 });
 
 test('Correctly determines that there is no sessionStorage support', function (assert) {
@@ -56,7 +65,9 @@ test('Correctly determines that there is no sessionStorage support', function (a
     StorageSupportUtility.set('global', {});
   });
 
-  assert.notOk(StorageSupportUtility.has('sessionStorage'), 'Should determine that there is storage support.');
+  return wait().then(() => {
+    assert.notOk(StorageSupportUtility.has('sessionStorage'), 'Should determine that there is storage support.');
+  });
 });
 
 test('Recovers from error thrown during storage support check and interprets as lack of support', function (assert) {
@@ -66,7 +77,8 @@ test('Recovers from error thrown during storage support check and interprets as 
 
   // package does not support IE8 so we are ok to do this.
   Object.defineProperty(_global, 'localStorage', {
-    get: function () {
+    getItem: function () {
+      Ember.Logger.log('yo');
       throw Error;
     }
   });
@@ -75,7 +87,9 @@ test('Recovers from error thrown during storage support check and interprets as 
     StorageSupportUtility.set('global', _global);
   });
 
-  assert.notOk(StorageSupportUtility.get('localStorage'),
-    'Should determine that there is no localStorage support due to error.');
+  return wait().then(() => {
+    assert.notOk(StorageSupportUtility.get('localStorage'),
+      'Should determine that there is no localStorage support due to error.');
+  });
 });
 
