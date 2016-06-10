@@ -1,7 +1,7 @@
 # ember-cli-storagekit change log
 
 ### 0.4.2
-- [#4](https://github.com/kennethdavidbuck/ember-cli-storagekit/pull/4)[BUGFIX] Fixes issue where the kit was not using
+- [#4](https://github.com/kennethdavidbuck/ember-cli-storagekit/pull/4) [BUGFIX] Fixes issue where the kit was not using
 the expected instance storage failover. Updates storage support check to happen as an instance initializer. Makes storage
 support more robust.
 
