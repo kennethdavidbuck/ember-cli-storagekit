@@ -3,7 +3,7 @@
 ### 0.4.2
 - [#4](https://github.com/kennethdavidbuck/ember-cli-storagekit/pull/4) [BUGFIX] Fixes issue where the kit was not using
 the expected instance storage failover. Updates storage support check to happen as an instance initializer. Makes storage
-support more robust.
+support check more robust.
 
 ### 0.4.1
 - [BUGFIX] Updated storage service injection strategy to register instance-storage as fallback instead of applying strategy
