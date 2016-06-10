@@ -1,5 +1,7 @@
 import AbstractAdapter from './abstract';
 
+const {computed} = Ember;
+
 /*global window*/
 
 /**
@@ -14,5 +16,7 @@ import AbstractAdapter from './abstract';
  */
 
 export default AbstractAdapter.extend({
-  storage: window.sessionStorage
+  storage: computed(function () {
+    return window.sessionStorage;
+  }).readOnly()
 });

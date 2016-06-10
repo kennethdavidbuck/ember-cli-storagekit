@@ -110,3 +110,28 @@ test('length', function (assert) {
   });
 });
 
+test('key returns correct index', function (assert) {
+  assert.expect(1);
+
+  const storageService = container.lookup('storagekit/service:instance-storage');
+
+  storageService.setItem('foo', 'bar');
+  storageService.setItem('baz', 'qux');
+
+  storageService.keys().then((keys) => {
+    assert.deepEqual(keys, ['baz', 'foo']);
+  });
+});
+
+test('#keys returns correct key set', function (assert) {
+  assert.expect(1);
+
+  const storageService = container.lookup('storagekit/service:instance-storage');
+
+  storageService.setItem('foo', 'bar');
+  storageService.setItem('baz', 'qux');
+
+  storageService.keys().then((keys) => {
+    assert.deepEqual(keys, ['baz', 'foo']);
+  });
+});
